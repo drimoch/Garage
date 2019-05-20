@@ -4,43 +4,57 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    class Vehicle
+   abstract class Vehicle
     {
-        // Members
-        private string m_LicenseNumber;
-        private string m_ModelName;
-        private float m_CurrentEnergy;
-        private float m_MaxEnergy;
-        private float m_CurrentEnergyPercent;
-        public float CurrentEnergy
+        public Vehicle(string i_LicenseNumber, string i_ModelName, List<Wheel> i_Wheels,Engine i_Engine)
         {
-            set
-            {
-                if (value + m_CurrentEnergy > m_MaxEnergy)
-                {
-                    //throw exception
-                }
-            }
-        }
-        public float CurrentEnergyPercent
-        {
-            get
-            {
-                return (m_CurrentEnergy / m_MaxEnergy) * 100;
-            }
+            r_LicenseNumber = i_LicenseNumber;
+            r_ModelName = i_ModelName;
+            r_Wheels = i_Wheels;
+            r_Engine = i_Engine;
         }
 
+        // Members
+        private readonly string r_LicenseNumber;
+        private readonly string r_ModelName;
+        private readonly float m_CurrentEnergyPercent;
+        private readonly List<Wheel> r_Wheels;
+        private readonly Engine r_Engine;
+        public float CurrentEnergyPercent
+        {
+            //connect to electricity somehow
+         //   set
+         //   {
+              //  m_CurrentEnergyPercent = (value / m_MaxEnergy) * 100;
+            //}
+            get
+            {
+                return m_CurrentEnergyPercent;
+            }
+        }
         public string LicenseNumber
 
         {
             get
             {
-                return m_LicenseNumber;
+                return r_LicenseNumber;
             }
-            set
+            
+        }
+        public string ModelName
+        {
+            get
             {
-                m_LicenseNumber = value;
+                return r_ModelName;
             }
         }
+        public List<Wheel> Wheels
+        {
+            get
+            {
+                return r_Wheels;
+            }
+        }
+
     }
 }
