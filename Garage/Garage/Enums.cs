@@ -32,5 +32,18 @@
         A2 = 2,
         B = 3
     }
-
+    public enum eVehicleStatus
+    {
+        inRepair = 0,
+        repaired = 1,
+        paid = 2
+    }
+    public enum eVehicleType
+    {
+        electricCar = 0,
+        fuelCar = 1,
+        electricMotorcycle = 2,
+        fuelMotorcycle = 3,
+        truck = 4
+    }
 }

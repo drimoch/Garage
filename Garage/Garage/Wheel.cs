@@ -8,8 +8,8 @@ namespace Ex3.GarageLogic
     {
         public Wheel(string i_Manufacturer, float i_MaxAirPressure, float i_CurrentAirPressure)
         {
-            m_Manufacturer = i_Manufacturer;
-            m_MaxAirPressure = i_MaxAirPressure;
+            r_Manufacturer = i_Manufacturer;
+            r_MaxAirPressure = i_MaxAirPressure;
             m_CurrentAirPressure = i_CurrentAirPressure;
 
         }
@@ -23,14 +23,14 @@ namespace Ex3.GarageLogic
         {
             get
             {
-                return m_Manufacturer;
+                return r_Manufacturer;
             }
         }
         public float MaxAirPressure
         {
             get
             {
-                return m_MaxAirPressure;
+                return r_MaxAirPressure;
             }
         }
         public float CurrentAirPressure
@@ -41,7 +41,7 @@ namespace Ex3.GarageLogic
             }
             set
             {
-                if (value > m_MaxAirPressure)
+                if (value > r_MaxAirPressure)
                 {
                     //throw exception
                 }

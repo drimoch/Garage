@@ -55,6 +55,19 @@ namespace Ex3.GarageLogic
                 return r_Wheels;
             }
         }
-
+        public override bool Equals(object obj)
+        {
+            bool equals = false;
+            Vehicle vehicleToCompare = obj as Vehicle;
+            if (this.r_LicenseNumber.Equals(vehicleToCompare.LicenseNumber))
+            {
+                equals = true;
+            }
+            return equals;
+        }
+        public override int GetHashCode()
+        {
+            return r_LicenseNumber.GetHashCode();
+        }
     }
 }
