@@ -55,6 +55,7 @@ namespace Ex3.GarageLogic
                 return r_Wheels;
             }
         }
+        //TODO: override == != functions
         public override bool Equals(object obj)
         {
             bool equals = false;
