@@ -18,7 +18,7 @@ namespace Ex3.GarageLogic
             }
             else
             {
-                //    throw Exception invalid value
+                throw new ArgumentException("Enigne capacity must be positive value");
             }
 
             if (Enum.IsDefined(typeof(eLicenseType), i_LicenseType))
@@ -27,8 +27,7 @@ namespace Ex3.GarageLogic
             }
             else
             {
-                //    throw Exception invalid value
-
+                throw new FormatException("Invalid license type");
             }
         }
         public eLicenseType LicenseType

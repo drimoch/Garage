@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    class Garage
+    public class Garage
     {
         //Members
         private List<VehicleInGarage> m_Vehicles;
@@ -51,10 +51,12 @@ namespace Ex3.GarageLogic
                     }
                 }
             }
+
             if (sameVehicleCounter == i_vehiclesInGarage.Count)
             {
                 listIsValid = true;
             }
+
             return listIsValid;
         }
 
@@ -83,14 +85,14 @@ namespace Ex3.GarageLogic
             i_Wheel = new Wheel(i_WheelManufacturer, m_MaxAirPressureCar, i_CurrentAirPressure);
         }
 
-        public void AddNewTruck(bool i_CarriesDangerousSubstances,eGasType i_GasType, string i_LicenseNumber, string i_ModelName, float i_CurrentEnergy, string i_WheelManufacturer, float i_CurrentAirPressure)
+        public void AddNewTruck(bool i_CarriesDangerousSubstances, eGasType i_GasType, string i_LicenseNumber, string i_ModelName, float i_CurrentEnergy, string i_WheelManufacturer, float i_CurrentAirPressure)
         {
             //there should be try&catch from consoleUI side when using this function
-            Engine engine;
+            /*Engine engine;
             Wheel wheel;
             InitVehicleEssentials(i_CurrentEnergy, i_WheelManufacturer, i_CurrentAirPressure, out engine, out wheel);
             List<Wheel> carWheels = Enumerable.Repeat(wheel, m_NumOfWheelsInCar).ToList();
-            Truck truck = new Truck(i_GasType,i_ContainerVolume,i_CarriesDangerousSubstances, i_LicenseNumber, i_ModelName, carWheels, engine);
+            Truck truck = new Truck(i_GasType,i_ContainerVolume,i_CarriesDangerousSubstances, i_LicenseNumber, i_ModelName, carWheels, engine);*/
         }
     }
 }

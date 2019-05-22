@@ -10,7 +10,7 @@ namespace Ex3.GarageLogic
         {
             if (i_MaxEnergy <= 0)
             {
-                //throw exception invalid value
+                throw new ArgumentException("Energy value must be positive");
             }
             else
             {
@@ -38,7 +38,7 @@ namespace Ex3.GarageLogic
             {
                 if (value > r_MaxEnergy || value < 0)
                 {
-                    //throw exception not in range
+                    throw new ValueOutOfRangeException("Current energy is out of range");
                 }
                 else
                 {
