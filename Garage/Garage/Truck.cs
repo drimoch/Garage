@@ -25,6 +25,7 @@ namespace Ex3.GarageLogic
                 return r_ContainerVolume;
             }
         }
+
         public bool R_CarriesDangerousSubstances
         {
             get

@@ -18,7 +18,6 @@ namespace Ex3.GarageLogic
         private float m_CurrentAirPressure;
         private readonly float r_MaxAirPressure;
 
-
         public string Manufacturer
         {
             get
@@ -26,6 +25,7 @@ namespace Ex3.GarageLogic
                 return r_Manufacturer;
             }
         }
+
         public float MaxAirPressure
         {
             get
@@ -33,6 +33,7 @@ namespace Ex3.GarageLogic
                 return r_MaxAirPressure;
             }
         }
+
         public float CurrentAirPressure
         {
             get
@@ -43,7 +44,7 @@ namespace Ex3.GarageLogic
             {
                 if (value > r_MaxAirPressure)
                 {
-                    //throw exception
+                    throw new ValueOutOfRangeException("The given air pressure is bigger than max");
                 }
                 else
                 {
@@ -51,9 +52,17 @@ namespace Ex3.GarageLogic
                 }
             }
         }
+
         public void AddAir(float i_AirToAdd)
         {
-            CurrentAirPressure = CurrentAirPressure + i_AirToAdd;
+            if(m_CurrentAirPressure + i_AirToAdd > r_MaxAirPressure)
+            {
+                throw new ValueOutOfRangeException("Couldn't add air to the wheel since it's exceeding the maximum");
+            }
+            else
+            {
+                m_CurrentAirPressure = m_CurrentAirPressure + i_AirToAdd;
+            }
         }
     }
 }

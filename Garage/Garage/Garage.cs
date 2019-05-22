@@ -19,7 +19,7 @@ namespace Ex3.GarageLogic
             }
             set
             {
-                if (IsVehicleListValid(value))
+                if (isVehicleListValid(value))
                 {
                     m_Vehicles = value;
 
@@ -31,7 +31,7 @@ namespace Ex3.GarageLogic
                 }
             }
         }
-        private bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
+        private bool isVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
         {
             int sameVehicleCounter = 0;
             bool listIsValid = false;
@@ -60,11 +60,13 @@ namespace Ex3.GarageLogic
             Motorcycle motorcycle = new Motorcycle(i_LicenseType, i_EngineCapacity, i_LicenseNumber, i_ModelName,/*list of wheel*/, engine);
            
         }
+
         public void AddNewElectricCar()
         {
             //there should be try&catch from consoleUI side when using this function
 
         }
+
         public void AddNewTruck()
         {
             //there should be try&catch from consoleUI side when using this function

@@ -11,6 +11,7 @@ namespace Ex3.GarageLogic
             r_MaxEnergy = i_MaxEnergy;
             m_CurrentEnergy = i_CurrentEnergy;
         }
+
         private readonly float r_MaxEnergy;
         private float m_CurrentEnergy;
 
@@ -21,6 +22,7 @@ namespace Ex3.GarageLogic
                 return r_MaxEnergy;
             }
         }
+
         public float CurrentEnergy
         {
             get
@@ -31,7 +33,7 @@ namespace Ex3.GarageLogic
             {
                 if (value > r_MaxEnergy)
                 {
-                    //throw exception
+                    throw new ValueOutOfRangeException("The given value is bigger than max energy");
                 }
                 else
                 {
@@ -43,7 +45,14 @@ namespace Ex3.GarageLogic
 
         protected void AddEnergy(float i_EnergyToAdd)
         {
-            CurrentEnergy = CurrentEnergy + i_EnergyToAdd;
+            if(CurrentEnergy + i_EnergyToAdd > r_MaxEnergy)
+            {
+                throw new ValueOutOfRangeException("The given value to add is bigger than max energy");
+            }
+            else
+            {
+                CurrentEnergy = CurrentEnergy + i_EnergyToAdd;
+            }
         }
     }
 }

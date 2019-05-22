@@ -6,7 +6,6 @@ namespace Ex3.GarageLogic
 {
     class Car : Vehicle
     {
-
         //Members
         private readonly eColor r_Color;
         private readonly eNumOfDoors r_NumOfDoors;
@@ -25,6 +24,7 @@ namespace Ex3.GarageLogic
                 return r_Color;
             }
         }
+
         public eNumOfDoors NumOfDoors
         {
             get
