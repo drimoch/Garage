@@ -8,8 +8,15 @@ namespace Ex3.GarageLogic
     {
         public Engine(float i_CurrentEnergy, float i_MaxEnergy)
         {
-            r_MaxEnergy = i_MaxEnergy;
-            m_CurrentEnergy = i_CurrentEnergy;
+            if (i_MaxEnergy <= 0)
+            {
+                //throw exception invalid value
+            }
+            else
+            {
+                r_MaxEnergy = i_MaxEnergy;
+            }
+            CurrentEnergy = i_CurrentEnergy;
         }
         private readonly float r_MaxEnergy;
         private float m_CurrentEnergy;
@@ -29,9 +36,9 @@ namespace Ex3.GarageLogic
             }
             set
             {
-                if (value > r_MaxEnergy)
+                if (value > r_MaxEnergy || value < 0)
                 {
-                    //throw exception
+                    //throw exception not in range
                 }
                 else
                 {
@@ -45,5 +52,6 @@ namespace Ex3.GarageLogic
         {
             CurrentEnergy = CurrentEnergy + i_EnergyToAdd;
         }
+
     }
 }
