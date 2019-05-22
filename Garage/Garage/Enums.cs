@@ -13,17 +13,17 @@
     }
     public enum eColor
     {
-        red = 0,
-        blue = 1,
-        black = 2,
-        grey = 3
+        Red = 0,
+        Blue = 1,
+        Black = 2,
+        Grey = 3
     }
     public enum eNumOfDoors
     {
-        two = 0,
-        three = 1,
-        four = 2,
-        five = 3
+        Two = 0,
+        Three = 1,
+        Four = 2,
+        Five = 3
     }
     public enum eLicenseType
     {
@@ -34,16 +34,16 @@
     }
     public enum eVehicleStatus
     {
-        inRepair = 0,
-        repaired = 1,
-        paid = 2
+        InRepair = 0,
+        Repaired = 1,
+        Paid = 2
     }
     public enum eVehicleType
     {
-        electricCar = 0,
-        fuelCar = 1,
-        electricMotorcycle = 2,
-        fuelMotorcycle = 3,
-        truck = 4
+        ElectricCar = 0,
+        FuelCar = 1,
+        ElectricMotorcycle = 2,
+        FuelMotorcycle = 3,
+        Truck = 4
     }
 }

@@ -6,7 +6,6 @@ namespace Ex3.GarageLogic
 {
     class ElectricEngine : Engine
     {
-
         public ElectricEngine(float i_CurrentEnergy, float i_MaxEnergy) : base(i_CurrentEnergy, i_MaxEnergy)
         {
         }
@@ -15,6 +14,5 @@ namespace Ex3.GarageLogic
         {
             base.AddEnergy(i_EnergyToAdd);
         }
-
     }
 }

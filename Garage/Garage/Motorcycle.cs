@@ -6,7 +6,6 @@ namespace Ex3.GarageLogic
 {
     class Motorcycle : Vehicle
     {
-
         //Members
         private readonly eLicenseType r_LicenseType;
         private readonly int r_EngineCapacity;
@@ -39,6 +38,7 @@ namespace Ex3.GarageLogic
                 return r_LicenseType;
             }
         }
+
         public int EngineCapacity
         {
             get
@@ -46,7 +46,5 @@ namespace Ex3.GarageLogic
                 return r_EngineCapacity;
             }
         }
-
-
     }
 }

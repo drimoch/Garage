@@ -6,7 +6,8 @@ namespace Ex3.ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu userConsole = new Menu();
+            userConsole.ShowMenu();
         }
     }
 }
