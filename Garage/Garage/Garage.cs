@@ -94,5 +94,19 @@ namespace Ex3.GarageLogic
             List<Wheel> carWheels = Enumerable.Repeat(wheel, m_NumOfWheelsInCar).ToList();
             Truck truck = new Truck(i_GasType,i_ContainerVolume,i_CarriesDangerousSubstances, i_LicenseNumber, i_ModelName, carWheels, engine);*/
         }
+
+        public List<string> GetVehiclesLicenseNumbers(eVehicleStatus i_Status)
+        {
+            List<string> carsInGarage = new List<string>();
+            foreach(VehicleInGarage vehicle in m_Vehicles)
+            {
+                if(vehicle.VehicleStatus == i_Status)
+                {
+                    carsInGarage.Add(vehicle.Vehicle.LicenseNumber);
+                }
+            }
+
+            return carsInGarage;
+        }
     }
 }

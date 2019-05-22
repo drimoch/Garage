@@ -7,6 +7,12 @@ namespace Ex3.ConsoleUI
 {
     public class Menu
     {
+        private readonly Garage r_Garage;     
+        public Menu()
+        {
+            r_Garage = new Garage();
+        }
+
         public void ShowMenu()
         {
             string menu = string.Format(@"Welcome to the garage!
@@ -70,29 +76,29 @@ namespace Ex3.ConsoleUI
         {
         }
 
-        private string getVehicleType()
+        private void printEnumArray<TEbum>()
         {
-            StringBuilder typeMenu = new StringBuilder("Please enter vehicle type:");
-            Array vehicleTypes = Enum.GetValues(typeof(eVehicleType));
-            foreach (eVehicleType type in vehicleTypes)
+            StringBuilder typeMenu = new StringBuilder("Please choose a type: ");
+            Array enumTypes = Enum.GetValues(typeof(TEbum));
+            foreach (TEbum type in enumTypes)
             {
                 typeMenu.Append(Environment.NewLine);
                 typeMenu.Append(Enum.GetName(typeof(eVehicleType), type));
             }
 
             Console.WriteLine(typeMenu);
-            string input = Console.ReadLine();
-            return input;
         }
 
-        private void insertNewVehicleToGarage()
-        {
-            Garage garage = new Garage();
+        private void insertNewVehicleToGarage() // TODO: add try catch
+        {            
             Console.WriteLine("Please enter the following details:{0}", Environment.NewLine);
             string model = getUserInput("Model's name:");
             string licenseNumber = getUserInput("License number:");
+            string owner = getUserInput("Owner:");
+            string phoneNumber = getUserInput("Phone number:");
             string currentEnergy = getUserInput("Percentage of energy left:");
-            string type = getVehicleType();
+            printEnumArray<eVehicleType>();
+            string type = getUserInput("Vehicle type: ");
             Console.WriteLine("Please enter the following details for the wheels:{0}", Environment.NewLine);
             string manufacturer = getUserInput("Manufacturer name:");
             string airPressure = getUserInput("Current air pressure:");
@@ -102,27 +108,61 @@ namespace Ex3.ConsoleUI
                 string licenseType = getUserInput("License type:");
                 eLicenseType licenseTypeEnum = convertToEnum<eLicenseType>(licenseType);
                 string engineCapacity = getUserInput("Engine capacity:");
-                garage.AddNewElectricMotorcycle(licenseTypeEnum, licenseNumber, model, int.Parse(engineCapacity), float.Parse(currentEnergy), manufacturer, float.Parse(airPressure));
+                try
+                {
+                    VehicleInitiator.AddNewElectricMotorcycle(licenseTypeEnum, licenseNumber, model, int.Parse(engineCapacity), float.Parse(currentEnergy), manufacturer, float.Parse(airPressure), phoneNumber, owner);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine("ERROR! Failed to add vehicle: {0}", ex.Message);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("ERROR! Failed to add vehicle: {0}", ex.Message); 
+                }
             }
-            else if(eVehicleType.ElectricCar.ToString() == type)
+            else if (eVehicleType.ElectricCar.ToString() == type)
             {
                 string carColor = getUserInput("Color:");
                 eColor carColorEnum = convertToEnum<eColor>(carColor);
                 string numOfDoors = getUserInput("Number of doors:");
                 eNumOfDoors numOfDoorsEnum = convertToEnum<eNumOfDoors>(numOfDoors);
-                garage.AddNewElectricCar(numOfDoorsEnum, carColorEnum, licenseNumber, model, float.Parse(currentEnergy), manufacturer, float.Parse(airPressure));
+                try
+                {
+                    VehicleInitiator.AddNewElectricCar(numOfDoorsEnum, carColorEnum, licenseNumber, model, float.Parse(currentEnergy), manufacturer, float.Parse(airPressure), phoneNumber, owner);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine("ERROR! Failed to add vehicle: {0}", ex.Message);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("ERROR! Failed to add vehicle: {0}", ex.Message);
+                }
             }
-            else if(eVehicleType.Truck.ToString() == type)
+            else if (eVehicleType.Truck.ToString() == type)
             {
                 string dangerousSubstances = getUserInput("Contains dangerous substances? (yes/no)");
                 bool isDangerous = convertInputToBoolean(dangerousSubstances, "yes", "no");
                 string containerVolume = getUserInput("Container volume:");
+                printEnumArray<eGasType>();
                 string gasType = getUserInput("Gas type:");
                 eGasType gasTypeEnum = convertToEnum<eGasType>(gasType);
-                garage.AddNewTruck(isDangerous, gasTypeEnum, licenseNumber, model, float.Parse(currentEnergy), manufacturer, float.Parse(airPressure));
+                try
+                {
+                    VehicleInitiator.AddNewTruck(isDangerous, float.Parse(containerVolume), gasTypeEnum, licenseNumber, model, float.Parse(currentEnergy), manufacturer, float.Parse(airPressure), phoneNumber, owner);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine("ERROR! Failed to add vehicle: {0}", ex.Message);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("ERROR! Failed to add vehicle: {0}", ex.Message);
+                }
             }
 
-            Console.WriteLine("Car was inserted to the garage");
+            Console.WriteLine("Car was successfully inserted to the garage");
         }
 
         private bool convertInputToBoolean(string i_Input, string i_Val1, string i_Val2)
@@ -157,8 +197,17 @@ namespace Ex3.ConsoleUI
 
         private void displayCarLicenseNumbers()
         {
-            Console.WriteLine("Please choose vehicles status");
-            string input = Console.ReadLine();
+            string status = getUserInput("Please choose vehicles status");
+            eVehicleStatus statusEnum = convertToEnum<eVehicleStatus>(status);
+            List<string> vehicleLicenses = r_Garage.GetVehiclesLicenseNumbers(statusEnum);
+            StringBuilder licenseList = new StringBuilder("Vehicle license numbers: ");
+            foreach(string license in vehicleLicenses)
+            {
+                licenseList.Append(Environment.NewLine);
+                licenseList.Append(license);
+            }
+
+            Console.WriteLine(licenseList);
         }
 
         private void changeVehicleStatus()
