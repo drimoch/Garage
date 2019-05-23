@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    public class Garage
+    public static class Garage
     {
         //Members
-        private List<VehicleInGarage> m_Vehicles;
+        private static List<VehicleInGarage> m_Vehicles;
 
 
 
@@ -32,7 +32,7 @@ namespace Ex3.GarageLogic
                 }
             }
         }
-        private bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
+        private static bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
         {
             int sameVehicleCounter = 0;
             bool listIsValid = false;
@@ -54,7 +54,7 @@ namespace Ex3.GarageLogic
 
             return listIsValid;
         }
-        public List<string> GetVehiclesLicenseNumbers(eVehicleStatus i_Status)
+        public static List<string> GetVehiclesLicenseNumbers(eVehicleStatus i_Status)
         {
             List<string> carsInGarage = new List<string>();
             foreach(VehicleInGarage vehicle in m_Vehicles)
@@ -66,6 +66,62 @@ namespace Ex3.GarageLogic
             }
 
             return carsInGarage;
+        }
+
+        private static bool isVehicleInGarage(string i_LienceNumber)
+        {
+            bool isFound = false;
+
+            foreach(VehicleInGarage vehicle in m_Vehicles)
+            {
+                if(vehicle.Vehicle.LicenseNumber == i_LienceNumber)
+                {
+                    isFound = true;
+                    break;
+                }
+            }
+
+            return isFound;
+        }
+
+        private static VehicleInGarage getVehicleByLicenseNumber(string i_LienceNumber)
+        {
+            VehicleInGarage vehicleFound = new VehicleInGarage();
+
+            foreach (VehicleInGarage vehicle in m_Vehicles)
+            {
+                if (vehicle.Vehicle.LicenseNumber == i_LienceNumber)
+                {
+                    vehicleFound = vehicle;
+                }
+            }
+
+            return vehicleFound;
+        }
+
+        public static string CreateStringVehicleDetails(string i_LicenseNumber)
+        {
+            string message;
+            if (isVehicleInGarage(i_LicenseNumber))
+            {
+                try
+                {
+                    VehicleInGarage vehicle = getVehicleByLicenseNumber(i_LicenseNumber);
+                    StringBuilder carDetails = new StringBuilder();
+                    carDetails.AppendFormat(vehicle.ToString());
+                    message = carDetails.ToString();
+                }
+                catch (Exception ex)
+                {
+                    message = ex.Message;
+                }
+            }
+            else
+            {
+                message = "The car is not in the garage";
+            }
+
+            return message;
         }
     }
 }

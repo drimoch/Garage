@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Ex3.GarageLogic
 {
-    static class VehicleInitiator
+    public static class VehicleInitiator
     {
         private const float m_MaxTimeElectricMotorcycle = 1.4f;
         private const float m_MaxTimeElectricCar = 1.8f;
