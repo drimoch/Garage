@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    public class Garage
+    public static class Garage
     {
         //Members
-        private List<VehicleInGarage> m_Vehicles;
+        private static List<VehicleInGarage> m_Vehicles;
 
 
 
@@ -32,7 +32,7 @@ namespace Ex3.GarageLogic
                 }
             }
         }
-        private bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
+        private static bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
         {
             int sameVehicleCounter = 0;
             bool listIsValid = false;
@@ -54,7 +54,7 @@ namespace Ex3.GarageLogic
 
             return listIsValid;
         }
-        public List<string> GetVehiclesLicenseNumbers(eVehicleStatus i_Status)
+        public static List<string> GetVehiclesLicenseNumbers(eVehicleStatus i_Status)
         {
             List<string> carsInGarage = new List<string>();
             foreach(VehicleInGarage vehicle in m_Vehicles)
