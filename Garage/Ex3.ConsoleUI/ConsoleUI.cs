@@ -5,15 +5,9 @@ using Ex3.GarageLogic;
 
 namespace Ex3.ConsoleUI
 {
-    public class Menu
+    public class ConsoleUI
     {
-        private readonly Garage r_Garage;     
-        public Menu()
-        {
-            r_Garage = new Garage();
-        }
-
-        public void ShowMenu()
+        public void PrintMenu()
         {
             string menu = string.Format(@"Welcome to the garage!
                                         Please choose an option from the menu: 
@@ -25,11 +19,11 @@ namespace Ex3.ConsoleUI
                                         6. Charge an electric vehicle
                                         7. Display full details on a vehicle");
             Console.WriteLine(menu);
-            string userInput = Console.ReadLine();
-            parseUserInput(userInput);
+            //string userInput = Console.ReadLine();
+            //parseUserInput(userInput);
         }
 
-        private void parseUserInput(string i_UserInput)
+        /*private void parseUserInput(string i_UserInput)
         {
             bool isInt = int.TryParse(i_UserInput, out int input);
             if(!isInt || input < 1 || input > 8)
@@ -38,58 +32,19 @@ namespace Ex3.ConsoleUI
             }
 
             handleUserInput(input);
-        }
+        }*/
 
-        private void handleUserInput(int i_Input)
+        public void PrintToScreen(string i_Message)
         {
-            switch(i_Input)
-            {
-                case 1:
-                    insertNewVehicleToGarage();
-                    break;
-                case 2:
-                    displayCarLicenseNumbers();
-                    break;
-                case 3:
-                    changeVehicleStatus();
-                    break;
-                case 4:
-                    fillAirPressureToMax();
-                    break;
-                case 5:
-                    fillGasInVehicle();
-                    break;
-                case 6:
-                    chargeElectricVehicle();
-                    break;
-                case 7:
-                    displayFullDetails();
-                    break;
-                default:
-                    Console.WriteLine("Please choose an option from the menu");
-                    ShowMenu();
-                    break;
-            }
+            Console.WriteLine(i_Message);
         }
 
+    
         private void insertRelevantVehicle(string i_VehicleType, Array i_VehicleTypes)
         {
         }
 
-        private void printEnumArray<TEbum>()
-        {
-            StringBuilder typeMenu = new StringBuilder("Please choose a type: ");
-            Array enumTypes = Enum.GetValues(typeof(TEbum));
-            foreach (TEbum type in enumTypes)
-            {
-                typeMenu.Append(Environment.NewLine);
-                typeMenu.Append(Enum.GetName(typeof(eVehicleType), type));
-            }
-
-            Console.WriteLine(typeMenu);
-        }
-
-        private void insertNewVehicleToGarage() // TODO: add try catch
+        /*private void insertNewVehicleToGarage() // TODO: add try catch
         {            
             Console.WriteLine("Please enter the following details:{0}", Environment.NewLine);
             string model = getUserInput("Model's name:");
@@ -163,13 +118,13 @@ namespace Ex3.ConsoleUI
             }
 
             Console.WriteLine("Car was successfully inserted to the garage");
-        }
+        }*/
 
         private bool convertInputToBoolean(string i_Input, string i_Val1, string i_Val2)
         {
             while(i_Input != i_Val1 && i_Input != i_Val2)
             {
-                i_Input = getUserInput("Wrong input, contains dangerous substances? (yes/no)");
+                i_Input = GetUserInput("Wrong input, contains dangerous substances? (yes/no)");
             }
 
             bool isTrue = i_Input == i_Val1;
@@ -177,37 +132,12 @@ namespace Ex3.ConsoleUI
             return isTrue;
         }
 
-        private TEnum convertToEnum<TEnum>(string i_Value)
-        {
-            while(!Enum.IsDefined(typeof(TEnum), i_Value))
-            {
-                i_Value = getUserInput("Invalid value, please try again: ");
-            }
+    
 
-            TEnum convertedEnum = (TEnum)Enum.Parse(typeof(TEnum), i_Value);
-                
-            return convertedEnum;
-        }
-
-        private string getUserInput(string i_TextToDisplay)
+        public string GetUserInput(string i_TextToDisplay="")
         {
             Console.WriteLine(i_TextToDisplay);
             return Console.ReadLine();
-        }
-
-        private void displayCarLicenseNumbers()
-        {
-            string status = getUserInput("Please choose vehicles status");
-            eVehicleStatus statusEnum = convertToEnum<eVehicleStatus>(status);
-            List<string> vehicleLicenses = r_Garage.GetVehiclesLicenseNumbers(statusEnum);
-            StringBuilder licenseList = new StringBuilder("Vehicle license numbers: ");
-            foreach(string license in vehicleLicenses)
-            {
-                licenseList.Append(Environment.NewLine);
-                licenseList.Append(license);
-            }
-
-            Console.WriteLine(licenseList);
         }
 
         private void changeVehicleStatus()

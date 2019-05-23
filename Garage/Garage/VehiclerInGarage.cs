@@ -18,6 +18,11 @@ namespace Ex3.GarageLogic
             r_Vehicle = i_vehicle;
         }
 
+        public VehicleInGarage()
+        {
+
+        }
+
         internal eVehicleStatus VehicleStatus
         {
             get

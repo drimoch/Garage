@@ -6,8 +6,8 @@ namespace Ex3.ConsoleUI
     {
         static void Main(string[] args)
         {
-            Menu userConsole = new Menu();
-            userConsole.ShowMenu();
+            UIManager manager = new UIManager();
+            manager.StartMenu();
         }
     }
 }
