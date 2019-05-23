@@ -10,7 +10,7 @@ namespace Ex3.GarageLogic
         private string m_Owner;
         private string m_PhoneNumber;
         private readonly Vehicle r_Vehicle;
-        public VehicleInGarage(string i_Owner, string i_PhoneNumber,Vehicle i_vehicle)
+        public VehicleInGarage(string i_Owner, string i_PhoneNumber, Vehicle i_vehicle)
         {
             m_VehicleStatus = eVehicleStatus.InRepair;
             m_Owner = i_Owner;

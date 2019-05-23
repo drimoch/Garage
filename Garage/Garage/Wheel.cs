@@ -11,7 +11,7 @@ namespace Ex3.GarageLogic
             r_Manufacturer = i_Manufacturer;
             if (i_MaxAirPressure <= 0)
             {
-                //throw exception invalid value
+                throw new ArgumentException("Air pressure value must be positive");
             }
             else
             {
@@ -50,7 +50,7 @@ namespace Ex3.GarageLogic
             {
                 if (value > r_MaxAirPressure || value < 0)
                 {
-                    //throw exception not in range
+                    throw new ValueOutOfRangeException("Air pressure is out of range");
                 }
                 else
                 {
