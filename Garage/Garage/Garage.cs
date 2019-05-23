@@ -111,6 +111,18 @@ namespace Ex3.GarageLogic
         {
             getVehicleByLicenseNumber(i_LicsenseNumber).VehicleStatus = i_NewStatus;
         }
+        public static void InflateWheelsToMax(string i_LicsenseNumber)
+        {
+            List<Wheel> wheelsToInflate = getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.Wheels;
+            foreach (Wheel wheel in wheelsToInflate)
+            {
+                wheel.CurrentAirPressure = wheel.MaxAirPressure;
+            }
+        }
 
+        public static void fuelVehicle(string i_LicsenseNumber,eGasType i_GasType,float i_GasToFuel)
+        {
+
+        }
     }
 }
