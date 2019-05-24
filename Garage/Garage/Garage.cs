@@ -54,7 +54,7 @@ namespace Ex3.GarageLogic
 
             return listIsValid;
         }
-        public static List<string> GetVehiclesLicenseNumbers(eVehicleStatus i_Status)
+        public static List<string> GetVehiclesLicenseNumbers(Enums.eVehicleStatus i_Status)
         {
             List<string> carsInGarage = new List<string>();
             foreach (VehicleInGarage vehicle in m_Vehicles)
@@ -107,7 +107,7 @@ namespace Ex3.GarageLogic
             return carDetails.ToString();
         }
 
-        public static void ChangeVehicleStatus(string i_LicsenseNumber, eVehicleStatus i_NewStatus)
+        public static void ChangeVehicleStatus(string i_LicsenseNumber, Enums.eVehicleStatus i_NewStatus)
         {
             getVehicleByLicenseNumber(i_LicsenseNumber).VehicleStatus = i_NewStatus;
         }
@@ -120,7 +120,7 @@ namespace Ex3.GarageLogic
             }
         }
 
-        public static void fuelVehicle(string i_LicsenseNumber,eGasType i_GasType,float i_GasToFuel)
+        public static void fuelVehicle(string i_LicsenseNumber, Enums.eGasType i_GasType,float i_GasToFuel)
         {
 
         }

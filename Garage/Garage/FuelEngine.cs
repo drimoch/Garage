@@ -6,13 +6,13 @@ namespace Ex3.GarageLogic
 {
     class FuelEngine : Engine
     {
-        private readonly eGasType r_GasType;
-        public FuelEngine(eGasType i_GasType, float i_CurrentEnergy, float i_MaxEnergy) : base(i_CurrentEnergy, i_MaxEnergy)
+        private readonly Enums.eGasType r_GasType;
+        public FuelEngine(Enums.eGasType i_GasType, float i_CurrentEnergy, float i_MaxEnergy) : base(i_CurrentEnergy, i_MaxEnergy)
         {
             r_GasType = i_GasType;
         }
 
-        public void AddGas(float i_AmountToAdd, eGasType i_GasType)
+        public void AddGas(float i_AmountToAdd, Enums.eGasType i_GasType)
         {
             if (i_GasType == r_GasType)
             {
@@ -24,7 +24,7 @@ namespace Ex3.GarageLogic
             }
         }
 
-        public eGasType GasType
+        public Enums.eGasType GasType
         {
             get
             {
