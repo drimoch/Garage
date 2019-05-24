@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
@@ -44,6 +45,17 @@ namespace Ex3.GarageLogic
             {
                 return r_EngineCapacity;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder motorcycleDetails = new StringBuilder(string.Format("The motorcycle details are: {0})", Environment.NewLine));
+
+            motorcycleDetails.Append(base.ToString());
+            motorcycleDetails.AppendFormat("License Type: {0}{1}", Enum.GetName(typeof(eLicenseType), r_LicenseType), Environment.NewLine);
+            motorcycleDetails.AppendFormat("Engine Capacity: {0}{1}", r_EngineCapacity, Environment.NewLine);
+
+            return motorcycleDetails.ToString();
         }
     }
 }

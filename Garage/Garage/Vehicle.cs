@@ -81,5 +81,24 @@ namespace Ex3.GarageLogic
         {
             return r_LicenseNumber.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            StringBuilder vehicleGeneralDetails = new StringBuilder(string.Format("Vehicle Details:{0}", Environment.NewLine));
+            vehicleGeneralDetails.AppendFormat("License Number: {0}{1}", r_LicenseNumber, Environment.NewLine);
+            vehicleGeneralDetails.AppendFormat("Model Name: {0}{1}", r_ModelName, Environment.NewLine);
+            vehicleGeneralDetails.AppendFormat("Wheels Details {0}:", Environment.NewLine);
+            int counter = 1;
+            foreach (Wheel wheel in r_Wheels)
+            {
+                vehicleGeneralDetails.AppendFormat("Wheel Number {0}: {1}", counter++, Environment.NewLine);
+                vehicleGeneralDetails.AppendFormat(wheel.ToString());
+            }
+
+            vehicleGeneralDetails.AppendFormat(r_Engine.ToString());
+
+            return vehicleGeneralDetails.ToString();
+        }
+
     }
 }

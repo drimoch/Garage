@@ -83,7 +83,7 @@ namespace Ex3.ConsoleUI
             }
             catch(Exception ex)
             {
-                r_ConsoleUI.PrintToScreen(ex.Message);
+                r_ConsoleUI.PrintToScreen("Coudln't print vehicle details since an error occured");
             }
         }
 

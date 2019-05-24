@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
@@ -32,6 +33,20 @@ namespace Ex3.GarageLogic
             {
                 return r_CarriesDangerousSubstances;
             }
+        }
+
+        public override string ToString()
+        {
+            const string k_Yes = "yes";
+            const string k_No = "no";
+            string carriesDangerous = r_CarriesDangerousSubstances ? k_Yes : k_No;
+            StringBuilder truckDetails = new StringBuilder(string.Format("The truck details are: {0})", Environment.NewLine));
+
+            truckDetails.Append(base.ToString());
+            truckDetails.AppendFormat("Carries Dangerous Substances: {0}{1}", carriesDangerous, Environment.NewLine);
+            truckDetails.AppendFormat("Container Volume: {0}{1}", r_ContainerVolume, Environment.NewLine);
+
+            return truckDetails.ToString();
         }
     }
 }

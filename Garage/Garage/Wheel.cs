@@ -6,6 +6,10 @@ namespace Ex3.GarageLogic
 {
     class Wheel
     {
+        private const float k_MinAirPressue = 0;
+        private readonly string r_Manufacturer;
+        private float m_CurrentAirPressure;
+        private readonly float r_MaxAirPressure;
         public Wheel(string i_Manufacturer, float i_MaxAirPressure, float i_CurrentAirPressure)
         {
             r_Manufacturer = i_Manufacturer;
@@ -20,11 +24,6 @@ namespace Ex3.GarageLogic
             CurrentAirPressure = i_CurrentAirPressure;
 
         }
-
-        private readonly string r_Manufacturer;
-        private float m_CurrentAirPressure;
-        private readonly float r_MaxAirPressure;
-
 
         public string Manufacturer
         {
@@ -50,7 +49,7 @@ namespace Ex3.GarageLogic
             {
                 if (value > r_MaxAirPressure || value < 0)
                 {
-                    throw new ValueOutOfRangeException("Air pressure is out of range");
+                    throw new ValueOutOfRangeException(k_MinAirPressue, r_MaxAirPressure);
                 }
                 else
                 {
@@ -62,5 +61,17 @@ namespace Ex3.GarageLogic
         {
             CurrentAirPressure = CurrentAirPressure + i_AirToAdd;
         }
+
+        public override string ToString()
+        {
+            StringBuilder wheelDetails = new StringBuilder();
+
+            wheelDetails.AppendFormat("Wheel's Manufacturer: {0}{1}", r_Manufacturer, Environment.NewLine);
+            wheelDetails.AppendFormat("Current Air Pressue: {0}{1}", m_CurrentAirPressure, Environment.NewLine);
+
+            return wheelDetails.ToString();
+        }
+
+
     }
 }

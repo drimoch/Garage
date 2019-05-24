@@ -6,6 +6,9 @@ namespace Ex3.GarageLogic
 {
     abstract class Engine
     {
+        private const float k_MinEnergy = 0;
+        private readonly float r_MaxEnergy;
+        private float m_CurrentEnergy;
         public Engine(float i_CurrentEnergy, float i_MaxEnergy)
         {
             if (i_MaxEnergy <= 0)
@@ -18,8 +21,6 @@ namespace Ex3.GarageLogic
             }
             CurrentEnergy = i_CurrentEnergy;
         }
-        private readonly float r_MaxEnergy;
-        private float m_CurrentEnergy;
 
         public float MaxEnergy
         {
@@ -38,7 +39,7 @@ namespace Ex3.GarageLogic
             {
                 if (value > r_MaxEnergy || value < 0)
                 {
-                    throw new ValueOutOfRangeException("Current energy is out of range");
+                    throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy);
                 }
                 else
                 {
@@ -53,5 +54,12 @@ namespace Ex3.GarageLogic
             CurrentEnergy = CurrentEnergy + i_EnergyToAdd;
         }
 
+        public override string ToString()
+        {
+            StringBuilder engineDetails = new StringBuilder();
+            engineDetails.AppendFormat("Current Gas/Energy: {0}{1}", m_CurrentEnergy, Environment.NewLine);
+
+            return engineDetails.ToString();
+        }
     }
 }

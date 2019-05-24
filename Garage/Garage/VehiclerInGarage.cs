@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
@@ -48,5 +49,17 @@ namespace Ex3.GarageLogic
         }
 
         internal Vehicle Vehicle { get {return r_Vehicle; } }
+
+        public override string ToString()
+        {
+            StringBuilder garageDetails = new StringBuilder();
+
+            garageDetails.AppendFormat("Owner's Name: {0}{1}", m_Owner, Environment.NewLine);
+            garageDetails.AppendFormat("Owner's Phone Number: {0}{1}", m_PhoneNumber, Environment.NewLine);
+            garageDetails.AppendFormat("Vehicle Status: {0}{1}", Enum.GetName(typeof(eVehicleStatus), m_VehicleStatus), Environment.NewLine);
+            garageDetails.AppendFormat(r_Vehicle.ToString());
+
+            return garageDetails.ToString();
+        }
     }
 }

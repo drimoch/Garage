@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
@@ -31,6 +32,17 @@ namespace Ex3.GarageLogic
             {
                 return r_NumOfDoors;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder carDetails = new StringBuilder(string.Format("The car details are: {0})", Environment.NewLine));
+
+            carDetails.Append(base.ToString());
+            carDetails.AppendFormat("Color: {0}{1}", r_Color, Environment.NewLine);
+            carDetails.AppendFormat("Number Of Doors: {0}{1}", r_NumOfDoors, Environment.NewLine);
+
+            return carDetails.ToString();
         }
     }
 }

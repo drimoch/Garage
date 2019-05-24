@@ -10,8 +10,6 @@ namespace Ex3.GarageLogic
         //Members
         private static List<VehicleInGarage> m_Vehicles;
 
-
-
         internal static List<VehicleInGarage> Vehicles
         {
             get
@@ -100,9 +98,10 @@ namespace Ex3.GarageLogic
         public static string CreateStringVehicleDetails(string i_LicenseNumber)
         {
             VehicleInGarage vehicle = getVehicleByLicenseNumber(i_LicenseNumber);
-            StringBuilder carDetails = new StringBuilder();
-            carDetails.AppendFormat(vehicle.ToString());
-            return carDetails.ToString();
+            StringBuilder vehicleDetails = new StringBuilder();
+            vehicleDetails.AppendFormat(vehicle.ToString());
+
+            return vehicleDetails.ToString();
         }
 
         public static void ChangeVehicleStatus(string i_LicsenseNumber, Enums.eVehicleStatus i_NewStatus)

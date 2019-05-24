@@ -14,5 +14,14 @@ namespace Ex3.GarageLogic
         {
             base.AddEnergy(i_EnergyToAdd);
         }
+
+        public override string ToString()
+        {
+            StringBuilder engineDetails = new StringBuilder();
+            engineDetails.AppendFormat("Engine Type: Electric{1}", Environment.NewLine);
+            engineDetails.Append(base.ToString());
+
+            return engineDetails.ToString();
+        }
     }
 }
