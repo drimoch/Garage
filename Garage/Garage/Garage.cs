@@ -86,17 +86,15 @@ namespace Ex3.GarageLogic
 
         private static VehicleInGarage getVehicleByLicenseNumber(string i_LienseNumber)
         {
-            VehicleInGarage vehicleFound;
-
             foreach (VehicleInGarage vehicle in m_Vehicles)
             {
                 if (vehicle.Vehicle.LicenseNumber == i_LienseNumber)
                 {
-                    return vehicleFound = vehicle;
+                    return vehicle;
                 }
             }
 
-            throw new Exception();//todo: throw exception vehicle not found
+            throw new Exception("Vehicle was not found");//todo: throw exception vehicle not found
         }
 
         public static string CreateStringVehicleDetails(string i_LicenseNumber)

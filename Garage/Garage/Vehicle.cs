@@ -55,17 +55,28 @@ namespace Ex3.GarageLogic
                 return r_Wheels;
             }
         }
-        //TODO: override == != functions
-        public override bool Equals(object obj)
+
+        public override bool Equals(object i_Obj1)
         {
             bool equals = false;
-            Vehicle vehicleToCompare = obj as Vehicle;
+            Vehicle vehicleToCompare = i_Obj1 as Vehicle;
             if (this.r_LicenseNumber.Equals(vehicleToCompare.LicenseNumber))
             {
                 equals = true;
             }
             return equals;
         }
+
+        public static bool operator ==(Vehicle i_Vehicle1, Vehicle i_Vehicle2)
+        {
+            return i_Vehicle1.LicenseNumber == i_Vehicle1.LicenseNumber;
+        }
+
+        public static bool operator !=(Vehicle i_Vehicle1, Vehicle i_Vehicle2)
+        {
+            return !(i_Vehicle1.LicenseNumber == i_Vehicle2.LicenseNumber);
+        }
+
         public override int GetHashCode()
         {
             return r_LicenseNumber.GetHashCode();
