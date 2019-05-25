@@ -222,14 +222,12 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        
-
         private void insertNewVehicleToGarage()
         {
             Vehicle vehicle = setBasicVehicleInfo();
-            setSpecificMembersPerVehicleType(ref vehicle);
+            setSpecificMembersPerVehicleType(vehicle);
             setVehicleOwnerInfo(out string o_Owner, out string o_Phone);
-            if (!VehicleInitiator.InsertVehicleToGarage(vehicle, o_Phone, o_Owner)) // this method will change the status to InRepair if vehicle is already in garage
+            if (!Garage.AddVehicleToGarage(vehicle, o_Phone, o_Owner)) // this method will change the status to InRepair if vehicle is already in garage
             {
                 r_ConsoleUI.PrintToScreen("Car was successfully inserted to the garage");
             }
@@ -254,13 +252,13 @@ namespace Ex3.ConsoleUI
             eVehicleType vehicleType = r_ConsoleUI.ParseEnum<eVehicleType>(type);
             string model = r_ConsoleUI.GetField("Model's name: ", v_LettersNumbersOnly);
             Vehicle newVehicle = VehicleInitiator.CreateVehicle(licenseNumber, vehicleType, model);
-            setEngine(ref newVehicle, vehicleType);
-            getWheelsInfo(vehicleType, ref newVehicle);
+            setEngine(newVehicle, vehicleType);
+            getWheelsInfo(vehicleType, newVehicle);
 
             return newVehicle;
         }
 
-        private void setEngine(ref Vehicle io_Vehicle, eVehicleType i_Type)
+        private void setEngine(Vehicle io_Vehicle, eVehicleType i_Type)
         {
             eGasType gasTypeEnum = k_EnumDefault;
             bool isElectric = i_Type == eVehicleType.ElectricCar || i_Type == eVehicleType.ElectricMotorcycle;
@@ -279,7 +277,7 @@ namespace Ex3.ConsoleUI
         {
             try
             {
-                VehicleInitiator.InitEngine(i_Type, i_CurrentEnergy, out Engine engine, ref i_Vehicle, i_GasType);
+                VehicleInitiator.InitEngine(i_Type, i_CurrentEnergy, out Engine engine, i_Vehicle, i_GasType);
             }
             catch (ValueOutOfRangeException ex)
             {
@@ -289,42 +287,42 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void getWheelsInfo(eVehicleType i_Type, ref Vehicle o_Vehicle)
+        private void getWheelsInfo(eVehicleType i_Type, Vehicle i_Vehicle)
         {
             string manufacturer = r_ConsoleUI.GetField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
             string airPressure = r_ConsoleUI.GetField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            setWheels(manufacturer, float.Parse(airPressure), i_Type, ref o_Vehicle);
+            setWheels(manufacturer, float.Parse(airPressure), i_Type, i_Vehicle);
         }
 
-        private void setWheels(string i_Manufacturer, float i_AirPressure, eVehicleType i_Type, ref Vehicle o_Vehicle)
+        private void setWheels(string i_Manufacturer, float i_AirPressure, eVehicleType i_Type, Vehicle i_Vehicle)
         {
             try
             {
-                VehicleInitiator.InitWheels(i_Manufacturer, i_AirPressure, i_Type, ref o_Vehicle);
+                VehicleInitiator.InitWheels(i_Manufacturer, i_AirPressure, i_Type, i_Vehicle);
             }
             catch (ValueOutOfRangeException ex)
             {
                 r_ConsoleUI.PrintToScreen(ex.Message);
                 i_AirPressure = float.Parse(r_ConsoleUI.GetField("Try again - Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly));
-                setWheels(i_Manufacturer, i_AirPressure, i_Type, ref o_Vehicle);
+                setWheels(i_Manufacturer, i_AirPressure, i_Type, i_Vehicle);
             }
             catch
             {
                 r_ConsoleUI.PrintToScreen("Something went wrong... Try again");
-                getWheelsInfo(i_Type, ref o_Vehicle);
+                getWheelsInfo(i_Type, i_Vehicle);
             }
         }
 
-        private void setSpecificMembersPerVehicleType(ref Vehicle io_Vehicle)
+        private void setSpecificMembersPerVehicleType(Vehicle i_Vehicle)
         {
             const char delimiter = '_';
-            FieldInfo[] specificVehicleMembers = io_Vehicle.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic);
+            FieldInfo[] specificVehicleMembers = i_Vehicle.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic);
 
             foreach (FieldInfo member in specificVehicleMembers)
             {
                 int delimiterIndex = member.Name.IndexOf(delimiter); // trim member's prefix
                 string memberName = member.Name.Substring(delimiterIndex + 1, member.Name.Length - 2);
-                setMember(member.FieldType, memberName, ref io_Vehicle);
+                setMember(member.FieldType, memberName, i_Vehicle);
             }
         }
 
@@ -342,7 +340,7 @@ namespace Ex3.ConsoleUI
             return input;
         }
 
-        private void setMember(Type i_MemberType, string i_MemberName, ref Vehicle io_Vehicle)
+        private void setMember(Type i_MemberType, string i_MemberName, Vehicle i_Vehicle)
         {
             string input = "";
 
@@ -364,17 +362,17 @@ namespace Ex3.ConsoleUI
             {
                 try
                 {
-                    VehicleInitiator.SetPropertiesForMember(i_MemberType, input, i_MemberName, ref io_Vehicle);
+                    VehicleInitiator.SetPropertiesForMember(i_MemberType, input, i_MemberName, i_Vehicle);
                 }
                 catch (InvalidCastException)
                 {
                     r_ConsoleUI.PrintToScreen(string.Format("Failed to handle input, since it's not from type {0}. Try again...", i_MemberType));
-                    setMember(i_MemberType, i_MemberName, ref io_Vehicle);
+                    setMember(i_MemberType, i_MemberName, i_Vehicle);
                 }
                 catch(Exception ex)
                 {
                     r_ConsoleUI.PrintToScreen(string.Format("An error occured, please try again...{0}{1}", Environment.NewLine, ex.Message));
-                    setMember(i_MemberType, i_MemberName, ref io_Vehicle);
+                    setMember(i_MemberType, i_MemberName, i_Vehicle);
                 }
             }
         }
