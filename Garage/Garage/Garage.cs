@@ -70,7 +70,7 @@ namespace Ex3.GarageLogic
             return carsInGarage;
         }
 
-        private static bool isVehicleInGarage(string i_LienceNumber)
+        public static bool IsVehicleInGarage(string i_LienceNumber)
         {
             bool isFound = false;
 
@@ -102,7 +102,8 @@ namespace Ex3.GarageLogic
         public static string CreateStringVehicleDetails(string i_LicenseNumber)
         {
             VehicleInGarage vehicle = getVehicleByLicenseNumber(i_LicenseNumber);
-            StringBuilder vehicleDetails = new StringBuilder();
+            StringBuilder vehicleDetails = new StringBuilder("SUCCESS: Vehicle Details:");
+            vehicleDetails.AppendFormat("{0}----------------------{1}", Environment.NewLine, Environment.NewLine);
             vehicleDetails.AppendFormat(vehicle.ToString());
 
             return vehicleDetails.ToString();
@@ -135,8 +136,6 @@ namespace Ex3.GarageLogic
             {
                 throw new ArgumentException("Vehicle has electric engine");
             }
-
-
         }
 
         public static void ChargeElectricVehicle(string i_LicsenseNumber, float i_NumOfMinutesToCharge)
@@ -157,17 +156,16 @@ namespace Ex3.GarageLogic
 
         public static bool AddVehicleToGarage(Vehicle i_Vehicle, string i_PhoneNumber, string i_Owner)
         {
-            bool isInGarage = isVehicleInGarage(i_Vehicle.LicenseNumber);
+            bool isInGarage = IsVehicleInGarage(i_Vehicle.LicenseNumber);
+            bool success = false;
+
             if (!isInGarage)
             {
                 m_Vehicles.Add(new VehicleInGarage(i_Owner, i_PhoneNumber, i_Vehicle));
-            }
-            else
-            {
-                getVehicleByLicenseNumber(i_Vehicle.LicenseNumber).VehicleStatus = Enums.eVehicleStatus.InRepair;
+                success = true;
             }
 
-            return isInGarage;
+            return success;
         }
     }
 }

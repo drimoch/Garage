@@ -9,8 +9,8 @@ namespace Ex3.GarageLogic
 {
     public static class VehicleInitiator
     {
-        private const float k_MaxTimeElectricMotorcycle = 3.5f;
-        private const float k_MaxTimeElectricCar = 12f;
+        private const float k_MaxTimeElectricMotorcycle = 1.4f;
+        private const float k_MaxTimeElectricCar = 1.8f;
         private const float k_MaxFuelMotorcycle = 8f;
         private const float k_MaxFuelCar = 55f;
         private const float k_MaxFuelTruck = 110f;
@@ -21,9 +21,15 @@ namespace Ex3.GarageLogic
         private const int k_NumOfWheelsInMotorcycle = 2;
         private const int k_NumOfWheelsInTruck = 12;
         private const int k_EnumDefault = 0;
-        public static void InitEngine(eVehicleType i_Type, float i_CurrentEnergy, out Engine o_Engine, Vehicle i_Vehicle, eGasType i_GasType = k_EnumDefault)
+        private const eGasType k_TruckGas = eGasType.Soler;
+        private const eGasType k_CarGas = eGasType.Octan96;
+        private const eGasType k_MotorcycleGas = eGasType.Octan95;
+
+        public static void InitEngine(eVehicleType i_Type, float i_CurrentEnergy, out Engine o_Engine, Vehicle i_Vehicle)
         {
             float maxEnergy;
+            eGasType gasType = k_EnumDefault;
+
             switch (i_Type)
             {
                 case eVehicleType.ElectricCar:
@@ -34,12 +40,15 @@ namespace Ex3.GarageLogic
                     break;
                 case eVehicleType.FuelCar:
                     maxEnergy = k_MaxFuelCar;
+                    gasType = k_CarGas;
                     break;
                 case eVehicleType.FuelMotorcycle:
                     maxEnergy = k_MaxFuelMotorcycle;
+                    gasType = k_MotorcycleGas;
                     break;
                 case eVehicleType.Truck:
                     maxEnergy = k_MaxFuelTruck;
+                    gasType = k_TruckGas;
                     break;
                 default:
                     throw new FormatException("Invalid Vehicle Type");
@@ -51,7 +60,7 @@ namespace Ex3.GarageLogic
             }
             else
             {
-                o_Engine = new FuelEngine(i_GasType, i_CurrentEnergy, maxEnergy);
+                o_Engine = new FuelEngine(gasType, i_CurrentEnergy, maxEnergy);
             }
 
             i_Vehicle.Engine = o_Engine;
