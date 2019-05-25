@@ -56,17 +56,17 @@ namespace Ex3.ConsoleUI
                     displayCarLicenseNumbers();
                     break;
                 case 3:
-                     changeVehicleStatus();
-                     break;
-                 case 4:
-                     inflateTiresToMax();
-                     break;
-                 case 5:
-                     fillGasInVehicle();
-                     break;
-                 case 6:
-                     chargeElectricVehicle();
-                     break;
+                    changeVehicleStatus();
+                    break;
+                case 4:
+                    inflateTiresToMax();
+                    break;
+                case 5:
+                    fillGasInVehicle();
+                    break;
+                case 6:
+                    chargeElectricVehicle();
+                    break;
                 case 7:
                     displayFullDetails();
                     break;
@@ -81,10 +81,10 @@ namespace Ex3.ConsoleUI
 
         private void changeVehicleStatus()
         {
-            string licenseNumber = getField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            createEnumArray<eVehicleStatus>();
-            string newStatus = getField("New Status: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            eVehicleStatus statusEnum = parseEnum<eVehicleStatus>(newStatus);
+            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
+            string newStatus = r_ConsoleUI.GetField("New Status: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            eVehicleStatus statusEnum = r_ConsoleUI.ParseEnum<eVehicleStatus>(newStatus);
             try
             {
                 Garage.ChangeVehicleStatus(licenseNumber, statusEnum);
@@ -102,7 +102,7 @@ namespace Ex3.ConsoleUI
 
         private void inflateTiresToMax()
         {
-            string licenseNumber = getField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
             {
                 Garage.InflateWheelsToMax(licenseNumber);
@@ -124,11 +124,11 @@ namespace Ex3.ConsoleUI
 
         private void fillGasInVehicle()
         {
-            string licenseNumber = getField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            createEnumArray<eGasType>();
-            string gasType = getField("Gas Type: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            eGasType gasTypeEnum = parseEnum<eGasType>(gasType);
-            string amount = getField("Amount: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            r_ConsoleUI.CreateEnumArray<eGasType>();
+            string gasType = r_ConsoleUI.GetField("Gas Type: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            eGasType gasTypeEnum = r_ConsoleUI.ParseEnum<eGasType>(gasType);
+            string amount = r_ConsoleUI.GetField("Amount: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
             {
                 Garage.FuelVehicle(licenseNumber, gasTypeEnum, float.Parse(amount));
@@ -150,8 +150,8 @@ namespace Ex3.ConsoleUI
    
         private void chargeElectricVehicle()
         {
-            string licenseNumber = getField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            string minutes = getField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string minutes = r_ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
             {
                 Garage.ChargeElectricVehicle(licenseNumber, int.Parse(minutes));
@@ -169,7 +169,7 @@ namespace Ex3.ConsoleUI
 
         private void displayFullDetails()
         {
-            string licenseNumber = getField("Please enter license number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = r_ConsoleUI.GetField("Please enter license number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string vehicleDetails;
             try
             {
@@ -186,160 +186,43 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private int convertToInt(string i_Value)
-        {
-            bool isInt = int.TryParse(i_Value, out int valueInt);
-            while (!isInt)
-            {
-                i_Value = r_ConsoleUI.GetUserInput("Failed to handle the field, please choose a number from the available values: ");
-                isInt = int.TryParse(i_Value, out valueInt);
-            }
-
-            return valueInt;
-        }
-
-        private TEnum parseEnum<TEnum>(string i_Value)
-        {
-            TEnum convertedEnum;
-            int toInt = convertToInt(i_Value);
-            while (!Enum.IsDefined(typeof(TEnum), toInt))
-            {
-                i_Value = r_ConsoleUI.GetUserInput("Invalid input, please choose a number in the displayed range: ");
-                toInt = convertToInt(i_Value);
-            }
-
-            try
-            {
-                convertedEnum = (TEnum)Enum.ToObject(typeof(TEnum), toInt);
-            }
-            catch (Exception)
-            {
-                i_Value = r_ConsoleUI.GetUserInput("Failed to handle the field, please choose a number from the available values: ");
-                convertedEnum = parseEnum<TEnum>(i_Value);
-            }
-            
-            return convertedEnum;
-        }
-
-        /*private TEnum convertToEnum<TEnum>(string i_Value)
-        {
-            while (!Enum.IsDefined(typeof(TEnum), i_Value))
-            {
-                i_Value = r_ConsoleUI.GetUserInput("Invalid value, please try again: ");
-            }
-
-            return parseEnum<TEnum>(i_Value);
-        }*/
-
         private void displayCarLicenseNumbers()
         {
-            string status = getField("Please choose vehicles status: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            createEnumArray<eVehicleStatus>();
-            eVehicleStatus statusEnum = parseEnum<eVehicleStatus>(status);
-            List<string> vehicleLicenses = Garage.GetVehiclesByStatus(statusEnum);
-            StringBuilder licenseList = new StringBuilder("Vehicle license numbers: ");
-            foreach (string license in vehicleLicenses)
+            const bool v_isStatusValid = true;
+            List<string> vehicleLicenses;
+
+            r_ConsoleUI.PrintToScreen("Please choose vehicles status: ");
+            r_ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
+            r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
+            string status = r_ConsoleUI.GetField("", !v_LettersNumbersOnly, v_NumbersOnly);
+            if(status == k_EnumDefault.ToString())
             {
-                licenseList.Append(Environment.NewLine);
-                licenseList.Append(license);
+                vehicleLicenses = Garage.GetVehiclesByStatus(k_EnumDefault, !v_isStatusValid);
+            }
+            else
+            {
+                eVehicleStatus statusEnum = r_ConsoleUI.ParseEnum<eVehicleStatus>(status);
+                vehicleLicenses = Garage.GetVehiclesByStatus(statusEnum);
             }
 
-            r_ConsoleUI.PrintToScreen(licenseList.ToString());
+            if (vehicleLicenses.Count == 0)
+            {
+                r_ConsoleUI.PrintToScreen("There are no vehicles in this status");
+            }
+            else
+            {
+                StringBuilder licenseList = new StringBuilder("Vehicle license numbers: ");
+                foreach (string license in vehicleLicenses)
+                {
+                    licenseList.Append(Environment.NewLine);
+                    licenseList.Append(license);
+                }
+
+                r_ConsoleUI.PrintToScreen(licenseList.ToString());
+            }
         }
 
-        private void createEnumArray<TEbum>()
-        {
-            StringBuilder typeMenu = new StringBuilder("Please choose a type: ");
-            Array enumTypes = Enum.GetValues(typeof(TEbum));
-            int counter = 1;
-
-            foreach (TEbum type in enumTypes)
-            {
-                typeMenu.Append(Environment.NewLine);
-                typeMenu.AppendFormat("{0} - {1}", counter++, Enum.GetName(typeof(TEbum), type));
-            }
-
-            r_ConsoleUI.PrintToScreen(typeMenu.ToString());
-        }
-
-        private string getField(string i_Field, bool i_LettersNumbersOnly = false, bool i_NumbersOnly = false, bool i_LettersOnly = false)
-        {
-            string input = r_ConsoleUI.GetUserInput(i_Field);
-            if (i_LettersNumbersOnly)
-            {
-                while (!isOnlyLettersNumbers(input))
-                {
-                    r_ConsoleUI.PrintToScreen("The field should contain only letters, numbers and spaces");
-                    input = r_ConsoleUI.GetUserInput("Please try again: ");
-                }
-            }
-            else if (i_NumbersOnly)
-            {
-                while (!isOnlyNumbers(input))
-                {
-                    r_ConsoleUI.PrintToScreen("The field should contain only numbers");
-                    input = r_ConsoleUI.GetUserInput("Please try again: ");
-                }
-            }
-            else if (i_LettersOnly)
-            {
-                while (!isOnlyLetters(input))
-                {
-                    r_ConsoleUI.PrintToScreen("The field should contain only letters and spaces");
-                    input = r_ConsoleUI.GetUserInput("Please try again: ");
-                }
-            }
-
-            return input;
-        }
-
-        private bool isOnlyLettersNumbers(string i_Input)
-        {
-            bool isValid = true;
-
-            foreach (char character in i_Input)
-            {
-                if (!char.IsLetterOrDigit(character) && character != ' ')
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            return isValid;
-        }
-
-        private bool isOnlyLetters(string i_Input)
-        {
-            bool isValid = true;
-
-            foreach (char character in i_Input)
-            {
-                if (!char.IsLetter(character) && character != ' ')
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            return isValid;
-        }
-
-        private bool isOnlyNumbers(string i_Input)
-        {
-            bool isValid = true;
-
-            foreach (char character in i_Input)
-            {
-                if (!char.IsDigit(character) && character != '.') // dot in case of float
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            return isValid;
-        }
+        
 
         private void insertNewVehicleToGarage()
         {
@@ -358,18 +241,18 @@ namespace Ex3.ConsoleUI
 
         private void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
         {
-            o_Owner = getField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
-            o_Phone = getField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            o_Owner = r_ConsoleUI.GetField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
+            o_Phone = r_ConsoleUI.GetField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
         }
 
         private Vehicle setBasicVehicleInfo()
         {
             r_ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
-            string licenseNumber = getField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            createEnumArray<eVehicleType>();
-            string type = getField("Vehicle type: ", v_LettersNumbersOnly);
-            eVehicleType vehicleType = parseEnum<eVehicleType>(type);
-            string model = getField("Model's name: ", v_LettersNumbersOnly);
+            string licenseNumber = r_ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            r_ConsoleUI.CreateEnumArray<eVehicleType>();
+            string type = r_ConsoleUI.GetField("Vehicle type: ", v_LettersNumbersOnly);
+            eVehicleType vehicleType = r_ConsoleUI.ParseEnum<eVehicleType>(type);
+            string model = r_ConsoleUI.GetField("Model's name: ", v_LettersNumbersOnly);
             Vehicle newVehicle = VehicleInitiator.CreateVehicle(licenseNumber, vehicleType, model);
             setEngine(ref newVehicle, vehicleType);
             getWheelsInfo(vehicleType, ref newVehicle);
@@ -381,29 +264,35 @@ namespace Ex3.ConsoleUI
         {
             eGasType gasTypeEnum = k_EnumDefault;
             bool isElectric = i_Type == eVehicleType.ElectricCar || i_Type == eVehicleType.ElectricMotorcycle;
-            string currentEnergy = getField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
             if (!isElectric)
             {
-                createEnumArray<eGasType>();
-                string gasType = getField("Gas type: ");
-                gasTypeEnum = parseEnum<eGasType>(gasType);
+                r_ConsoleUI.CreateEnumArray<eGasType>();
+                string gasType = r_ConsoleUI.GetField("Gas type: ");
+                gasTypeEnum = r_ConsoleUI.ParseEnum<eGasType>(gasType);
             }
 
+            string currentEnergy = r_ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            initEngine(io_Vehicle, i_Type, float.Parse(currentEnergy), gasTypeEnum);
+        }
+
+        private void initEngine(Vehicle i_Vehicle, eVehicleType i_Type, float i_CurrentEnergy, eGasType i_GasType)
+        {
             try
             {
-                VehicleInitiator.InitEngine(i_Type, float.Parse(currentEnergy), out Engine engine, ref io_Vehicle, gasTypeEnum);
+                VehicleInitiator.InitEngine(i_Type, i_CurrentEnergy, out Engine engine, ref i_Vehicle, i_GasType);
             }
             catch (ValueOutOfRangeException ex)
             {
                 r_ConsoleUI.PrintToScreen(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, "Try again"));
-                setEngine(ref io_Vehicle, i_Type);
+                string currentEnergy = r_ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
+                initEngine(i_Vehicle, i_Type, float.Parse(currentEnergy), i_GasType);
             }
         }
 
         private void getWheelsInfo(eVehicleType i_Type, ref Vehicle o_Vehicle)
         {
-            string manufacturer = getField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
-            string airPressure = getField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string manufacturer = r_ConsoleUI.GetField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
+            string airPressure = r_ConsoleUI.GetField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
             setWheels(manufacturer, float.Parse(airPressure), i_Type, ref o_Vehicle);
         }
 
@@ -416,7 +305,7 @@ namespace Ex3.ConsoleUI
             catch (ValueOutOfRangeException ex)
             {
                 r_ConsoleUI.PrintToScreen(ex.Message);
-                i_AirPressure = float.Parse(getField("Try again - Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly));
+                i_AirPressure = float.Parse(r_ConsoleUI.GetField("Try again - Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly));
                 setWheels(i_Manufacturer, i_AirPressure, i_Type, ref o_Vehicle);
             }
             catch
@@ -437,55 +326,6 @@ namespace Ex3.ConsoleUI
                 string memberName = member.Name.Substring(delimiterIndex + 1, member.Name.Length - 2);
                 setMember(member.FieldType, memberName, ref io_Vehicle);
             }
-        }
-
-        private string findEnumType(Type i_Type)
-        {
-            string input;
-
-            if(i_Type == typeof(eColor))
-            {
-                createEnumArray<eColor>();
-                input = r_ConsoleUI.GetUserInput();
-                parseEnum<eColor>(input);
-            }
-            else if (i_Type == typeof(eGasType))
-            {
-                createEnumArray<eGasType>();
-                input = r_ConsoleUI.GetUserInput();
-                parseEnum<eGasType>(input);
-            }
-            else if (i_Type == typeof(eLicenseType))
-            {
-                createEnumArray<eLicenseType>();
-                input = r_ConsoleUI.GetUserInput();
-                parseEnum<eLicenseType>(input);
-            }
-            else if (i_Type == typeof(eNumOfDoors))
-            {
-                createEnumArray<eNumOfDoors>();
-                input = r_ConsoleUI.GetUserInput();
-                parseEnum<eNumOfDoors>(input);
-            }
-            else if (i_Type == typeof(eVehicleStatus))
-            {
-                createEnumArray<eVehicleStatus>();
-                input = r_ConsoleUI.GetUserInput();
-                parseEnum<eVehicleStatus>(input);
-            }
-            else if (i_Type == typeof(eVehicleType))
-            {
-                createEnumArray<eVehicleType>();
-                input = r_ConsoleUI.GetUserInput();
-                parseEnum<eVehicleType>(input);
-            }
-            else
-            {
-                r_ConsoleUI.PrintToScreen("Member's type is invalid, moving on...");
-                input = "";
-            }
-
-            return input;
         }
 
         private string handleBooleanType(string i_MemberName)
@@ -509,7 +349,7 @@ namespace Ex3.ConsoleUI
             r_ConsoleUI.PrintToScreen(string.Format("{0}: ", i_MemberName));
             if (i_MemberType.IsEnum)
             {             
-                input = findEnumType(i_MemberType);
+                input = r_ConsoleUI.FindEnumType(i_MemberType);
             }
             else if (i_MemberType == typeof(Boolean))
             {

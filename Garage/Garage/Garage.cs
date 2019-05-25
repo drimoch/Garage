@@ -52,12 +52,16 @@ namespace Ex3.GarageLogic
             return listIsValid;
         }
 
-        public static List<string> GetVehiclesByStatus(Enums.eVehicleStatus i_Status)
+        public static List<string> GetVehiclesByStatus(Enums.eVehicleStatus i_Status, bool i_IsStatusValid = true)
         {
             List<string> carsInGarage = new List<string>();
             foreach (VehicleInGarage vehicle in m_Vehicles)
             {
-                if (vehicle.VehicleStatus == i_Status || i_Status == Enums.eVehicleStatus.None)
+                if (!i_IsStatusValid)
+                {
+                    carsInGarage.Add(vehicle.Vehicle.LicenseNumber);
+                }
+                else if(vehicle.VehicleStatus == i_Status)
                 {
                     carsInGarage.Add(vehicle.Vehicle.LicenseNumber);
                 }

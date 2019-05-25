@@ -8,7 +8,6 @@ namespace Ex3.GarageLogic.Enums
     {
         InRepair = 1,
         Repaired = 2,
-        Paid = 3,
-        None = 4
+        Paid = 3
     }
 }
