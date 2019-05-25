@@ -244,16 +244,26 @@ namespace Ex3.ConsoleUI
 
         private void insertNewVehicleToGarage()
         {
-            Vehicle vehicle = setBasicVehicleInfo();
-            setSpecificMembersPerVehicleType(vehicle);
-            setVehicleOwnerInfo(out string o_Owner, out string o_Phone);
-            if (!Garage.AddVehicleToGarage(vehicle, o_Phone, o_Owner)) // this method will change the status to InRepair if vehicle is already in garage
+            r_ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
+            string licenseNumber = r_ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            if (Garage.IsVehicleInGarage(licenseNumber))
             {
-                r_ConsoleUI.PrintToScreen("SUCCESS: Car was successfully inserted to the garage");
+                Garage.ChangeVehicleStatus(licenseNumber, eVehicleStatus.InRepair);
+                r_ConsoleUI.PrintToScreen("STATUS UPDATE: Car already exists in the garage, changing its status to InRepair");
             }
             else
             {
-                r_ConsoleUI.PrintToScreen("STATUS UPDATE: Car already exists in the garage, changing its status to InRepair");
+                Vehicle vehicle = setBasicVehicleInfo(licenseNumber);
+                setSpecificMembersPerVehicleType(vehicle);
+                setVehicleOwnerInfo(out string o_Owner, out string o_Phone);
+                if (Garage.AddVehicleToGarage(vehicle, o_Phone, o_Owner))
+                {
+                    r_ConsoleUI.PrintToScreen("SUCCESS: Car was successfully inserted to the garage");
+                }
+                else
+                {
+                    r_ConsoleUI.PrintToScreen("ERROR: An error occured while trying to insert the car to the garage");
+                }
             }
         }
 
@@ -263,15 +273,13 @@ namespace Ex3.ConsoleUI
             o_Phone = r_ConsoleUI.GetField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
         }
 
-        private Vehicle setBasicVehicleInfo()
+        private Vehicle setBasicVehicleInfo(string i_LicenseNumber)
         {
-            r_ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
-            string licenseNumber = r_ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             r_ConsoleUI.CreateEnumArray<eVehicleType>();
             string type = r_ConsoleUI.GetField("Vehicle type: ", v_LettersNumbersOnly);
             eVehicleType vehicleType = r_ConsoleUI.ParseEnum<eVehicleType>(type);
             string model = r_ConsoleUI.GetField("Model's name: ", v_LettersNumbersOnly);
-            Vehicle newVehicle = VehicleInitiator.CreateVehicle(licenseNumber, vehicleType, model);
+            Vehicle newVehicle = VehicleInitiator.CreateVehicle(i_LicenseNumber, vehicleType, model);
             setEngine(newVehicle, vehicleType);
             getWheelsInfo(vehicleType, newVehicle);
 
