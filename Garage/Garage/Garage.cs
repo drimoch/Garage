@@ -139,7 +139,7 @@ namespace Ex3.GarageLogic
 
         }
 
-        public static void ChargeElectricVehicle(string i_LicsenseNumber, int i_NumOfMinutesToCharge)
+        public static void ChargeElectricVehicle(string i_LicsenseNumber, float i_NumOfMinutesToCharge)
         {
             Engine engine = getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.Engine;
             ElectricEngine electricEngine = engine as ElectricEngine;

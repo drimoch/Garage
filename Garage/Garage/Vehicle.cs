@@ -15,21 +15,8 @@ namespace Ex3.GarageLogic
         // Members
         private readonly string r_LicenseNumber;
         private readonly string r_ModelName;
-        private readonly float m_CurrentEnergyPercent;
         private List<Wheel> m_Wheels;
         private Engine m_Engine;
-        public float CurrentEnergyPercent
-        {
-            //connect to electricity somehow
-         //   set
-         //   {
-              //  m_CurrentEnergyPercent = (value / m_MaxEnergy) * 100;
-            //}
-            get
-            {
-                return m_CurrentEnergyPercent;
-            }
-        }
 
         public string LicenseNumber
         {
