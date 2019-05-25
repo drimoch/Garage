@@ -8,8 +8,7 @@ namespace Ex3.GarageLogic
     public static class Garage
     {
         //Members
-        private static List<VehicleInGarage> m_Vehicles;
-
+        private static List<VehicleInGarage> m_Vehicles = new List<VehicleInGarage>();
         internal static List<VehicleInGarage> Vehicles
         {
             get
@@ -25,11 +24,11 @@ namespace Ex3.GarageLogic
                 }
                 else
                 {
-                    throw new Exception();
-                    //throw exception to vehicles with same license
+                    throw new ArgumentException("A vehicle with the same license number already exists");
                 }
             }
         }
+
         private static bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
         {
             int sameVehicleCounter = 0;
@@ -52,12 +51,13 @@ namespace Ex3.GarageLogic
 
             return listIsValid;
         }
-        public static List<string> GetVehiclesLicenseNumbers(Enums.eVehicleStatus i_Status)
+
+        public static List<string> GetVehiclesByStatus(Enums.eVehicleStatus i_Status)
         {
             List<string> carsInGarage = new List<string>();
             foreach (VehicleInGarage vehicle in m_Vehicles)
             {
-                if (vehicle.VehicleStatus == i_Status)
+                if (vehicle.VehicleStatus == i_Status || i_Status == Enums.eVehicleStatus.None)
                 {
                     carsInGarage.Add(vehicle.Vehicle.LicenseNumber);
                 }
@@ -92,7 +92,7 @@ namespace Ex3.GarageLogic
                 }
             }
 
-            throw new Exception("Vehicle was not found");//todo: throw exception vehicle not found
+            throw new ArgumentException("Vehicle was not found");
         }
 
         public static string CreateStringVehicleDetails(string i_LicenseNumber)
@@ -108,6 +108,7 @@ namespace Ex3.GarageLogic
         {
             getVehicleByLicenseNumber(i_LicsenseNumber).VehicleStatus = i_NewStatus;
         }
+
         public static void InflateWheelsToMax(string i_LicsenseNumber)
         {
             List<Wheel> wheelsToInflate = getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.Wheels;
@@ -117,9 +118,29 @@ namespace Ex3.GarageLogic
             }
         }
 
-        public static void fuelVehicle(string i_LicsenseNumber, Enums.eGasType i_GasType,float i_GasToFuel)
+        public static void FuelVehicle(string i_LicsenseNumber, Enums.eGasType i_GasType,float i_GasToFuel)
         {
 
+        }
+
+        public static void ChargeElectricVehicle(string i_LicsenseNumber, int i_NumOfMinutesToCharge)
+        {
+
+        }
+
+        public static bool AddVehicleToGarage(Vehicle i_Vehicle, string i_PhoneNumber, string i_Owner)
+        {
+            bool isInGarage = isVehicleInGarage(i_Vehicle.LicenseNumber);
+            if (!isInGarage)
+            {
+                m_Vehicles.Add(new VehicleInGarage(i_Owner, i_PhoneNumber, i_Vehicle));
+            }
+            else
+            {
+                getVehicleByLicenseNumber(i_Vehicle.LicenseNumber).VehicleStatus = Enums.eVehicleStatus.InRepair;
+            }
+
+            return isInGarage;
         }
     }
 }

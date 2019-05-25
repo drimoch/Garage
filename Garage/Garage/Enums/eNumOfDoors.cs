@@ -6,9 +6,9 @@ namespace Ex3.GarageLogic.Enums
 {
     public enum eNumOfDoors
     {
-        Two = 0,
-        Three = 1,
-        Four = 2,
-        Five = 3
+        Two = 1,
+        Three = 2,
+        Four = 3,
+        Five = 4
     }
 }

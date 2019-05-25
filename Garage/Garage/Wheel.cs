@@ -4,25 +4,22 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    class Wheel
+    public class Wheel
     {
-        private const float k_MinAirPressue = 0;
+        private const float k_MinAirPressure = 0;
         private readonly string r_Manufacturer;
         private float m_CurrentAirPressure;
         private readonly float r_MaxAirPressure;
         public Wheel(string i_Manufacturer, float i_MaxAirPressure, float i_CurrentAirPressure)
         {
             r_Manufacturer = i_Manufacturer;
-            if (i_MaxAirPressure <= 0)
+            r_MaxAirPressure = i_MaxAirPressure;
+            if(i_CurrentAirPressure > r_MaxAirPressure)
             {
-                throw new ArgumentException("Air pressure value must be positive");
+                throw new ValueOutOfRangeException(k_MinAirPressure, r_MaxAirPressure);
             }
-            else
-            {
-                r_MaxAirPressure = i_MaxAirPressure;
-            }
+            
             CurrentAirPressure = i_CurrentAirPressure;
-
         }
 
         public string Manufacturer
@@ -32,6 +29,7 @@ namespace Ex3.GarageLogic
                 return r_Manufacturer;
             }
         }
+
         public float MaxAirPressure
         {
             get
@@ -39,6 +37,7 @@ namespace Ex3.GarageLogic
                 return r_MaxAirPressure;
             }
         }
+
         public float CurrentAirPressure
         {
             get
@@ -47,9 +46,9 @@ namespace Ex3.GarageLogic
             }
             set
             {
-                if (value > r_MaxAirPressure || value < 0)
+                if (value > r_MaxAirPressure || value < k_MinAirPressure)
                 {
-                    throw new ValueOutOfRangeException(k_MinAirPressue, r_MaxAirPressure);
+                    throw new ValueOutOfRangeException(k_MinAirPressure, r_MaxAirPressure);
                 }
                 else
                 {
@@ -57,6 +56,7 @@ namespace Ex3.GarageLogic
                 }
             }
         }
+
         public void AddAir(float i_AirToAdd)
         {
             CurrentAirPressure = CurrentAirPressure + i_AirToAdd;
@@ -67,11 +67,9 @@ namespace Ex3.GarageLogic
             StringBuilder wheelDetails = new StringBuilder();
 
             wheelDetails.AppendFormat("Wheel's Manufacturer: {0}{1}", r_Manufacturer, Environment.NewLine);
-            wheelDetails.AppendFormat("Current Air Pressue: {0}{1}", m_CurrentAirPressure, Environment.NewLine);
+            wheelDetails.AppendFormat("Current Air Pressure: {0}{1}", m_CurrentAirPressure, Environment.NewLine);
 
             return wheelDetails.ToString();
         }
-
-
     }
 }

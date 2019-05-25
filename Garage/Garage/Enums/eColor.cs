@@ -6,9 +6,9 @@ namespace Ex3.GarageLogic.Enums
 {
     public enum eColor
     {
-        Red = 0,
-        Blue = 1,
-        Black = 2,
-        Grey = 3
+        Red = 1,
+        Blue = 2,
+        Black = 3,
+        Grey = 4
     }
 }

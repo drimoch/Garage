@@ -18,7 +18,7 @@ namespace Ex3.GarageLogic
         public override string ToString()
         {
             StringBuilder engineDetails = new StringBuilder();
-            engineDetails.AppendFormat("Engine Type: Electric{1}", Environment.NewLine);
+            engineDetails.AppendFormat("Engine Type: Electric{0}", Environment.NewLine);
             engineDetails.Append(base.ToString());
 
             return engineDetails.ToString();

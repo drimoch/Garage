@@ -6,10 +6,10 @@ namespace Ex3.GarageLogic.Enums
 {
     public enum eVehicleType
     {
-        ElectricCar = 0,
-        FuelCar = 1,
-        ElectricMotorcycle = 2,
-        FuelMotorcycle = 3,
-        Truck = 4
+        ElectricCar = 1,
+        FuelCar = 2,
+        ElectricMotorcycle = 3,
+        FuelMotorcycle = 4,
+        Truck = 5
     }
 }

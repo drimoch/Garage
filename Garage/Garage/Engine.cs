@@ -4,22 +4,30 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    abstract class Engine
+    public abstract class Engine
     {
         private const float k_MinEnergy = 0;
         private readonly float r_MaxEnergy;
         private float m_CurrentEnergy;
         public Engine(float i_CurrentEnergy, float i_MaxEnergy)
         {
-            if (i_MaxEnergy <= 0)
+            if (i_MaxEnergy <= k_MinEnergy)
             {
-                throw new ArgumentException("Energy value must be positive");
+                throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy);
             }
             else
             {
                 r_MaxEnergy = i_MaxEnergy;
             }
-            CurrentEnergy = i_CurrentEnergy;
+
+            if (i_CurrentEnergy > r_MaxEnergy)
+            {
+                throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy);
+            }
+            else
+            {
+                CurrentEnergy = i_CurrentEnergy;
+            }
         }
 
         public float MaxEnergy
@@ -37,7 +45,7 @@ namespace Ex3.GarageLogic
             }
             set
             {
-                if (value > r_MaxEnergy || value < 0)
+                if (value > r_MaxEnergy || value < k_MinEnergy)
                 {
                     throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy);
                 }
@@ -51,7 +59,12 @@ namespace Ex3.GarageLogic
 
         protected void AddEnergy(float i_EnergyToAdd)
         {
-            CurrentEnergy = CurrentEnergy + i_EnergyToAdd;
+            if(m_CurrentEnergy + i_EnergyToAdd > r_MaxEnergy)
+            {
+                throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy - m_CurrentEnergy);
+            }
+
+            m_CurrentEnergy = m_CurrentEnergy + i_EnergyToAdd;
         }
 
         public override string ToString()

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    class ValueOutOfRangeException : Exception
+    public class ValueOutOfRangeException : Exception
     {
         private float m_MinValue;
         private float m_MaxValue;
