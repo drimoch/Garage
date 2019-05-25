@@ -161,13 +161,14 @@ namespace Ex3.ConsoleUI
 
         private void chargeElectricVehicle()
         {
+            const float k_MinutesInHour = 60f;
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string minutes = r_ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            float minutesFloat = float.Parse(minutes);
 
             try
             {
-                Garage.ChargeElectricVehicle(licenseNumber, minutesFloat / 60f);
+                float minutesFloat = float.Parse(minutes);
+                Garage.ChargeElectricVehicle(licenseNumber, minutesFloat / k_MinutesInHour);
                 r_ConsoleUI.PrintToScreen("SUCCESS: Vehicle was charged successfully");
             }
             catch (ArgumentException ex)
