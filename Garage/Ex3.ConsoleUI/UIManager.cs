@@ -155,9 +155,10 @@ namespace Ex3.ConsoleUI
         {
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string minutes = r_ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            float minutesFloat = float.Parse(minutes);
             try
             {
-                Garage.ChargeElectricVehicle(licenseNumber, float.Parse(minutes));
+                Garage.ChargeElectricVehicle(licenseNumber, (minutesFloat / 60f));
                 r_ConsoleUI.PrintToScreen("Vehicle was charged successfully");
             }
             catch (ArgumentException ex)

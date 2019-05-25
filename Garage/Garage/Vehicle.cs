@@ -60,6 +60,7 @@ namespace Ex3.GarageLogic
             }
         }
 
+
         public override bool Equals(object i_Obj)
         {
             bool equals = false;
