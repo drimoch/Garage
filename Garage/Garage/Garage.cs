@@ -129,7 +129,7 @@ namespace Ex3.GarageLogic
 
         public static void ChargeElectricVehicle(string i_LicsenseNumber, int i_NumOfMinutesToCharge)
         {
-
+            getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.//check is engine fuel and then cast and fuel
         }
 
         public static bool AddVehicleToGarage(Vehicle i_Vehicle, string i_PhoneNumber, string i_Owner)
