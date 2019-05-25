@@ -12,14 +12,6 @@ namespace Ex3.GarageLogic
             r_ModelName = i_Model;
         }
 
-        /*public Vehicle(string i_LicenseNumber, string i_ModelName, List<Wheel> i_Wheels, Engine i_Engine)
-        {
-            r_LicenseNumber = i_LicenseNumber;
-            r_ModelName = i_ModelName;
-            r_Wheels = i_Wheels;
-            m_Engine = i_Engine;
-        }*/
-
         // Members
         private readonly string r_LicenseNumber;
         private readonly string r_ModelName;
@@ -81,10 +73,10 @@ namespace Ex3.GarageLogic
             }
         }
 
-        public override bool Equals(object i_Obj1)
+        public override bool Equals(object i_Obj)
         {
             bool equals = false;
-            Vehicle vehicleToCompare = i_Obj1 as Vehicle;
+            Vehicle vehicleToCompare = i_Obj as Vehicle;
             if (this.r_LicenseNumber.Equals(vehicleToCompare.LicenseNumber))
             {
                 equals = true;

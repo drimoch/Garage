@@ -154,7 +154,7 @@ namespace Ex3.ConsoleUI
             string minutes = getField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
             {
-                Garage.ChargeElectricVehicle(licenseNumber, int.Parse(minutes));
+                Garage.ChargeElectricVehicle(licenseNumber, float.Parse(minutes));
                 r_ConsoleUI.PrintToScreen("Vehicle was charged successfully");
             }
             catch (ArgumentException ex)
@@ -355,7 +355,6 @@ namespace Ex3.ConsoleUI
                 r_ConsoleUI.PrintToScreen("Car already exists in the garage, changing its status to InRepair");
             }
         }
-
         private void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
         {
             o_Owner = getField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);

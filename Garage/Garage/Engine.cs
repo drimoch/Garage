@@ -57,7 +57,7 @@ namespace Ex3.GarageLogic
             }
         }
 
-        protected void AddEnergy(float i_EnergyToAdd)
+        protected void addEnergy(float i_EnergyToAdd)
         {
             if(m_CurrentEnergy + i_EnergyToAdd > r_MaxEnergy)
             {

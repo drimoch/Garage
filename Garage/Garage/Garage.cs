@@ -17,7 +17,7 @@ namespace Ex3.GarageLogic
             }
             set
             {
-                if (IsVehicleListValid(value))
+                if (isVehicleListValid(value))
                 {
                     m_Vehicles = value;
 
@@ -29,7 +29,7 @@ namespace Ex3.GarageLogic
             }
         }
 
-        private static bool IsVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
+        private static bool isVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
         {
             int sameVehicleCounter = 0;
             bool listIsValid = false;
@@ -118,14 +118,37 @@ namespace Ex3.GarageLogic
             }
         }
 
-        public static void FuelVehicle(string i_LicsenseNumber, Enums.eGasType i_GasType,float i_GasToFuel)
+        public static void FuelVehicle(string i_LicsenseNumber, Enums.eGasType i_GasType, float i_GasToFuel)
         {
+            Engine engine = getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.Engine;
+            FuelEngine fuelEngine = engine as FuelEngine;
+
+            if (fuelEngine != null)
+            {
+                fuelEngine.FuelVehicle(i_GasToFuel, i_GasType);
+            }
+            else
+            {
+                throw new ArgumentException("Vehicle has electric engine");
+            }
+
 
         }
 
         public static void ChargeElectricVehicle(string i_LicsenseNumber, int i_NumOfMinutesToCharge)
         {
-            getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.//check is engine fuel and then cast and fuel
+            Engine engine = getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.Engine;
+            ElectricEngine electricEngine = engine as ElectricEngine;
+
+            if (electricEngine != null)
+            {
+                electricEngine.Charge(i_NumOfMinutesToCharge);
+            }
+            else
+            {
+                throw new ArgumentException("Vehicle has fuel engine");
+            }
+
         }
 
         public static bool AddVehicleToGarage(Vehicle i_Vehicle, string i_PhoneNumber, string i_Owner)

@@ -16,7 +16,7 @@ namespace Ex3.GarageLogic
         {
             if (i_GasType == r_GasType)
             {
-                base.AddEnergy(i_AmountToAdd);
+                base.addEnergy(i_AmountToAdd);
             }
             else
             {

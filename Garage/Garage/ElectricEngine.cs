@@ -12,7 +12,7 @@ namespace Ex3.GarageLogic
 
         public void Charge(float i_EnergyToAdd)
         {
-            base.AddEnergy(i_EnergyToAdd);
+            base.addEnergy(i_EnergyToAdd);
         }
 
         public override string ToString()
