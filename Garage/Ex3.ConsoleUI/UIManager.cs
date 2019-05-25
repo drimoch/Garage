@@ -278,32 +278,17 @@ namespace Ex3.ConsoleUI
             return newVehicle;
         }
 
-        private void setEngine(Vehicle io_Vehicle, eVehicleType i_Type)
+        private void setEngine(Vehicle i_Vehicle, eVehicleType i_Type)
         {
-            eGasType gasTypeEnum = k_EnumDefault;
-            bool isElectric = i_Type == eVehicleType.ElectricCar || i_Type == eVehicleType.ElectricMotorcycle;
-            if (!isElectric)
-            {
-                r_ConsoleUI.CreateEnumArray<eGasType>();
-                string gasType = r_ConsoleUI.GetField("Gas type: ");
-                gasTypeEnum = r_ConsoleUI.ParseEnum<eGasType>(gasType);
-            }
-
             string currentEnergy = r_ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            initEngine(io_Vehicle, i_Type, float.Parse(currentEnergy), gasTypeEnum);
-        }
-
-        private void initEngine(Vehicle i_Vehicle, eVehicleType i_Type, float i_CurrentEnergy, eGasType i_GasType)
-        {
             try
             {
-                VehicleInitiator.InitEngine(i_Type, i_CurrentEnergy, out Engine engine, i_Vehicle, i_GasType);
+                VehicleInitiator.InitEngine(i_Type, float.Parse(currentEnergy), out Engine engine, i_Vehicle);
             }
             catch (ValueOutOfRangeException ex)
             {
                 r_ConsoleUI.PrintToScreen(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, "Try again"));
-                string currentEnergy = r_ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
-                initEngine(i_Vehicle, i_Type, float.Parse(currentEnergy), i_GasType);
+                setEngine(i_Vehicle, i_Type);
             }
         }
 
