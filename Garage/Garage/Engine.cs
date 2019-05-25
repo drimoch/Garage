@@ -32,9 +32,7 @@ namespace Ex3.GarageLogic
             }
         }
         public float CurrentEnergyPercent
-        {
-            
-            //  m_CurrentEnergyPercent = 
+        {            
             get
             {
                 return m_CurrentEnergyPercent;
@@ -70,18 +68,19 @@ namespace Ex3.GarageLogic
 
         protected void addEnergy(float i_EnergyToAdd)
         {
-            if(m_CurrentEnergy + i_EnergyToAdd > r_MaxEnergy)
+            if(CurrentEnergy + i_EnergyToAdd > r_MaxEnergy)
             {
-                throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy - m_CurrentEnergy);
+                throw new ValueOutOfRangeException(k_MinEnergy, r_MaxEnergy - CurrentEnergy);
             }
 
-            m_CurrentEnergy = m_CurrentEnergy + i_EnergyToAdd;
+            CurrentEnergy = CurrentEnergy + i_EnergyToAdd;
         }
 
         public override string ToString()
         {
             StringBuilder engineDetails = new StringBuilder();
             engineDetails.AppendFormat("Current Gas/Energy: {0}{1}", m_CurrentEnergy, Environment.NewLine);
+            engineDetails.AppendFormat("Energy Left: {0}%{1}", m_CurrentEnergyPercent, Environment.NewLine);
 
             return engineDetails.ToString();
         }

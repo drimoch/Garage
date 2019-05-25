@@ -8,18 +8,28 @@ namespace Ex3.ConsoleUI
 {
     public class ConsoleUI
     {
+        private const string k_Quit = "Q";
+        public string Quit
+        {
+            get
+            {
+                return k_Quit;
+            }
+        }
+
         public void PrintMenu()
         {
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("Welcome to the garage!{0}", Environment.NewLine);
-            menu.AppendFormat("Please choose an option from the menu: {0}", Environment.NewLine);
+            menu.AppendFormat("======================================================================================================{0}", Environment.NewLine);
+            menu.AppendFormat("Please choose an option from the menu (you can press {0} at any point in order to go back to the menu): {1}", k_Quit, Environment.NewLine);
             menu.AppendFormat("1. Insert new vehicle to the garage{0}", Environment.NewLine);
             menu.AppendFormat("2. Display the garage cars license numbers{0}", Environment.NewLine);
-            menu.AppendFormat("3. Change car's status in the garage{0}", Environment.NewLine);
+            menu.AppendFormat("3. Change vehicle's status in the garage{0}", Environment.NewLine);
             menu.AppendFormat("4. Fill air pressure to maximum for a vehicle{0}", Environment.NewLine);
             menu.AppendFormat("5. Fill gas in a vehicle{0}", Environment.NewLine);
             menu.AppendFormat("6. Charge an electric vehicle{0}", Environment.NewLine);
             menu.AppendFormat("7. Display full details on a vehicle{0}", Environment.NewLine);
+            menu.AppendFormat("======================================================================================================{0}", Environment.NewLine);
             Console.WriteLine(menu);
         }
 
@@ -35,12 +45,20 @@ namespace Ex3.ConsoleUI
                 Console.WriteLine(i_TextToDisplay);
             }
 
-            return Console.ReadLine();
+            string input = Console.ReadLine();
+            if(input == k_Quit)
+            {
+                UIManager manager = new UIManager();
+                manager.StartMenu();
+            }
+
+            return input;
         }
 
         public string GetField(string i_Field, bool i_LettersNumbersOnly = false, bool i_NumbersOnly = false, bool i_LettersOnly = false)
         {
             string input = GetUserInput(i_Field);
+
             if (i_LettersNumbersOnly)
             {
                 while (!isOnlyLettersNumbers(input))
@@ -204,6 +222,20 @@ namespace Ex3.ConsoleUI
                 PrintToScreen("Member's type is invalid, moving on...");
                 input = "";
             }
+
+            return input;
+        }
+
+        public string HandleBooleanType(string i_MemberName)
+        {
+            PrintToScreen(string.Format("1 - Yes{0}2 - No", Environment.NewLine));
+            string input = GetUserInput("Your Choice: ");
+            while (input != "1" && input != "2")
+            {
+                input = GetUserInput("The input is invalid, please choose 1 or 2: ");
+            }
+
+            input = input == "1" ? "true" : "false";
 
             return input;
         }

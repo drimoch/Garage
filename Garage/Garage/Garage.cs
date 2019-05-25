@@ -102,7 +102,8 @@ namespace Ex3.GarageLogic
         public static string CreateStringVehicleDetails(string i_LicenseNumber)
         {
             VehicleInGarage vehicle = getVehicleByLicenseNumber(i_LicenseNumber);
-            StringBuilder vehicleDetails = new StringBuilder();
+            StringBuilder vehicleDetails = new StringBuilder("SUCCESS: Vehicle Details:");
+            vehicleDetails.AppendFormat("{0}----------------------{1}", Environment.NewLine, Environment.NewLine);
             vehicleDetails.AppendFormat(vehicle.ToString());
 
             return vehicleDetails.ToString();
@@ -135,8 +136,6 @@ namespace Ex3.GarageLogic
             {
                 throw new ArgumentException("Vehicle has electric engine");
             }
-
-
         }
 
         public static void ChargeElectricVehicle(string i_LicsenseNumber, float i_NumOfMinutesToCharge)
