@@ -158,14 +158,16 @@ namespace Ex3.ConsoleUI
                 fillGasInVehicle();
             }
         }
-   
+
         private void chargeElectricVehicle()
         {
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string minutes = r_ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            float minutesFloat = float.Parse(minutes);
+
             try
             {
-                Garage.ChargeElectricVehicle(licenseNumber, float.Parse(minutes));
+                Garage.ChargeElectricVehicle(licenseNumber, minutesFloat / 60f);
                 r_ConsoleUI.PrintToScreen("SUCCESS: Vehicle was charged successfully");
             }
             catch (ArgumentException ex)
@@ -194,7 +196,7 @@ namespace Ex3.ConsoleUI
                 vehicleDetails = Garage.CreateStringVehicleDetails(licenseNumber);
                 r_ConsoleUI.PrintToScreen(vehicleDetails);
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 r_ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
                 displayFullDetails();
@@ -215,7 +217,7 @@ namespace Ex3.ConsoleUI
             r_ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
             r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
             string status = r_ConsoleUI.GetField("", !v_LettersNumbersOnly, v_NumbersOnly);
-            if(status == k_EnumDefault.ToString())
+            if (status == k_EnumDefault.ToString())
             {
                 vehicleLicenses = Garage.GetVehiclesByStatus(k_EnumDefault, !v_isStatusValid);
             }
@@ -345,12 +347,12 @@ namespace Ex3.ConsoleUI
 
             r_ConsoleUI.PrintToScreen(string.Format("{0}: ", i_MemberName));
             if (i_MemberType.IsEnum)
-            {             
+            {
                 input = r_ConsoleUI.FindEnumType(i_MemberType);
             }
             else if (i_MemberType == typeof(Boolean))
             {
-                input = r_ConsoleUI.HandleBooleanType(i_MemberName);     
+                input = r_ConsoleUI.HandleBooleanType(i_MemberName);
             }
             else
             {
@@ -368,7 +370,7 @@ namespace Ex3.ConsoleUI
                     r_ConsoleUI.PrintToScreen(string.Format("Failed to handle input, since it's not from type {0}. Try again...", i_MemberType));
                     setMember(i_MemberType, i_MemberName, i_Vehicle);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     r_ConsoleUI.PrintToScreen(string.Format("An error occured, please try again...{0}{1}", Environment.NewLine, ex.Message));
                     setMember(i_MemberType, i_MemberName, i_Vehicle);
