@@ -6,8 +6,9 @@ namespace Ex3.GarageLogic.Enums
 {
     public enum eVehicleStatus
     {
-        InRepair = 0,
-        Repaired = 1,
-        Paid = 2
+        InRepair = 1,
+        Repaired = 2,
+        Paid = 3,
+        None = 4
     }
 }

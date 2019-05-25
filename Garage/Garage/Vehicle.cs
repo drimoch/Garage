@@ -4,22 +4,28 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-   abstract class Vehicle
-    {
-        public Vehicle(string i_LicenseNumber, string i_ModelName, List<Wheel> i_Wheels,Engine i_Engine)
+   public abstract class Vehicle
+   {
+        public Vehicle(string i_LicenseNumber, string i_Model)
+        {
+            r_LicenseNumber = i_LicenseNumber;
+            r_ModelName = i_Model;
+        }
+
+        /*public Vehicle(string i_LicenseNumber, string i_ModelName, List<Wheel> i_Wheels, Engine i_Engine)
         {
             r_LicenseNumber = i_LicenseNumber;
             r_ModelName = i_ModelName;
             r_Wheels = i_Wheels;
-            r_Engine = i_Engine;
-        }
+            m_Engine = i_Engine;
+        }*/
 
         // Members
         private readonly string r_LicenseNumber;
         private readonly string r_ModelName;
         private readonly float m_CurrentEnergyPercent;
-        private readonly List<Wheel> r_Wheels;
-        private readonly Engine r_Engine;
+        private List<Wheel> m_Wheels;
+        private Engine m_Engine;
         public float CurrentEnergyPercent
         {
             //connect to electricity somehow
@@ -32,15 +38,15 @@ namespace Ex3.GarageLogic
                 return m_CurrentEnergyPercent;
             }
         }
-        public string LicenseNumber
 
+        public string LicenseNumber
         {
             get
             {
                 return r_LicenseNumber;
-            }
-            
+            }           
         }
+
         public string ModelName
         {
             get
@@ -48,11 +54,30 @@ namespace Ex3.GarageLogic
                 return r_ModelName;
             }
         }
+
+        public Engine Engine
+        {
+            get
+            {
+                return m_Engine;
+            }
+
+            set
+            {
+                m_Engine = value;
+            }
+        }
+
         public List<Wheel> Wheels
         {
             get
             {
-                return r_Wheels;
+                return m_Wheels;
+            }
+
+            set
+            {
+                m_Wheels = value;
             }
         }
 
@@ -87,15 +112,10 @@ namespace Ex3.GarageLogic
             StringBuilder vehicleGeneralDetails = new StringBuilder(string.Format("Vehicle Details:{0}", Environment.NewLine));
             vehicleGeneralDetails.AppendFormat("License Number: {0}{1}", r_LicenseNumber, Environment.NewLine);
             vehicleGeneralDetails.AppendFormat("Model Name: {0}{1}", r_ModelName, Environment.NewLine);
-            vehicleGeneralDetails.AppendFormat("Wheels Details {0}:", Environment.NewLine);
-            int counter = 1;
-            foreach (Wheel wheel in r_Wheels)
-            {
-                vehicleGeneralDetails.AppendFormat("Wheel Number {0}: {1}", counter++, Environment.NewLine);
-                vehicleGeneralDetails.AppendFormat(wheel.ToString());
-            }
-
-            vehicleGeneralDetails.AppendFormat(r_Engine.ToString());
+            vehicleGeneralDetails.AppendFormat("Wheels Details: {0}", Environment.NewLine);
+            vehicleGeneralDetails.AppendFormat("Number of Wheels: {0}{1}", m_Wheels.Count, Environment.NewLine);
+            vehicleGeneralDetails.AppendFormat(m_Wheels[0].ToString());
+            vehicleGeneralDetails.AppendFormat(m_Engine.ToString());
 
             return vehicleGeneralDetails.ToString();
         }
