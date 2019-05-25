@@ -12,7 +12,7 @@ namespace Ex3.GarageLogic
             r_GasType = i_GasType;
         }
 
-        public void AddGas(float i_AmountToAdd, Enums.eGasType i_GasType)
+        public void FuelVehicle(float i_AmountToAdd, Enums.eGasType i_GasType)
         {
             if (i_GasType == r_GasType)
             {

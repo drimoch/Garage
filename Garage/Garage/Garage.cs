@@ -119,7 +119,7 @@ namespace Ex3.GarageLogic
 
         public static void fuelVehicle(string i_LicsenseNumber, Enums.eGasType i_GasType,float i_GasToFuel)
         {
-
+            getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.//check is engine fuel and then cast and fuel
         }
     }
 }
