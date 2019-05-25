@@ -137,10 +137,13 @@ namespace Ex3.ConsoleUI
             catch (ArgumentException ex)
             {
                 r_ConsoleUI.PrintToScreen(ex.Message);
+                r_ConsoleUI.PrintToScreen("try again");
+                changeVehicleStatus();
             }
             catch (ValueOutOfRangeException ex)
             {
                 r_ConsoleUI.PrintToScreen(ex.Message);
+              
             }
             catch
             {
@@ -160,6 +163,9 @@ namespace Ex3.ConsoleUI
             catch (ArgumentException ex)
             {
                 r_ConsoleUI.PrintToScreen(ex.Message);
+                r_ConsoleUI.PrintToScreen("try again");
+                changeVehicleStatus();
+
             }
             catch
             {
