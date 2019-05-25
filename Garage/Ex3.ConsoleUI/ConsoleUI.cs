@@ -135,12 +135,12 @@ namespace Ex3.ConsoleUI
         public void CreateEnumArray<TEbum>()
         {
             StringBuilder typeMenu = new StringBuilder();
-            Array enumTypes = Enum.GetValues(typeof(TEbum));
+            string[] enumTypes = Enum.GetNames(typeof(TEbum));
             int counter = 1;
 
-            foreach (TEbum type in enumTypes)
+            foreach (string type in enumTypes)
             {
-                typeMenu.AppendFormat("{0} - {1}", counter++, Enum.GetName(typeof(TEbum), type));
+                typeMenu.AppendFormat("{0} - {1}", counter++, type);
                 typeMenu.Append(Environment.NewLine);
             }
 
