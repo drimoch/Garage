@@ -48,8 +48,7 @@ namespace Ex3.ConsoleUI
             string input = Console.ReadLine();
             if(input == k_Quit)
             {
-                UIManager manager = new UIManager();
-                manager.StartMenu();
+                UIManager.StartMenu();
             }
 
             return input;

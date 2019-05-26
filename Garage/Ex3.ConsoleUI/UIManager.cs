@@ -7,28 +7,25 @@ using System.Reflection;
 
 namespace Ex3.ConsoleUI
 {
-    class UIManager
+   static class UIManager
     {
         // Members
-        private readonly ConsoleUI r_ConsoleUI;
+        private static readonly ConsoleUI r_ConsoleUI =new ConsoleUI();
         private const bool v_LettersNumbersOnly = true;
         private const bool v_NumbersOnly = true;
         private const bool v_LettersOnly = true;
         private const int k_EnumDefault = 0;
         // Methods
-        public UIManager()
-        {
-            r_ConsoleUI = new ConsoleUI();
-        }
+      
 
-        public void StartMenu()
+        static public void StartMenu()
         {
             r_ConsoleUI.PrintMenu();
             string userInput = r_ConsoleUI.GetUserInput();
             parseUserInput(userInput);
         }
 
-        private void parseUserInput(string i_UserInput)
+        static private void parseUserInput(string i_UserInput)
         {
             int input;
 
@@ -45,7 +42,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void handleUserInput(int i_Input)
+        static private void handleUserInput(int i_Input)
         {
             switch (i_Input)
             {
@@ -79,7 +76,7 @@ namespace Ex3.ConsoleUI
             StartMenu();
         }
 
-        private void changeVehicleStatus()
+        static private void changeVehicleStatus()
         {
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
@@ -102,7 +99,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void inflateTiresToMax()
+        static private void inflateTiresToMax()
         {
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
 
@@ -130,7 +127,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void fillGasInVehicle()
+        static private void fillGasInVehicle()
         {
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             r_ConsoleUI.CreateEnumArray<eGasType>();
@@ -159,7 +156,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void chargeElectricVehicle()
+        static private void chargeElectricVehicle()
         {
             string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string minutes = r_ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
@@ -187,7 +184,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void displayFullDetails()
+        static private void displayFullDetails()
         {
             string licenseNumber = r_ConsoleUI.GetField("Please enter license number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string vehicleDetails;
@@ -208,7 +205,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void displayCarLicenseNumbers()
+        static private void displayCarLicenseNumbers()
         {
             const bool v_isStatusValid = true;
             List<string> vehicleLicenses;
@@ -244,7 +241,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void insertNewVehicleToGarage()
+        static private void insertNewVehicleToGarage()
         {
             r_ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
             string licenseNumber = r_ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
@@ -269,13 +266,13 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
+        static private void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
         {
             o_Owner = r_ConsoleUI.GetField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
             o_Phone = r_ConsoleUI.GetField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
         }
 
-        private Vehicle setBasicVehicleInfo(string i_LicenseNumber)
+        static private Vehicle setBasicVehicleInfo(string i_LicenseNumber)
         {
             r_ConsoleUI.CreateEnumArray<eVehicleType>();
             string type = r_ConsoleUI.GetField("Vehicle type: ", v_LettersNumbersOnly);
@@ -288,7 +285,7 @@ namespace Ex3.ConsoleUI
             return newVehicle;
         }
 
-        private void setEngine(Vehicle i_Vehicle, eVehicleType i_Type)
+        static private void setEngine(Vehicle i_Vehicle, eVehicleType i_Type)
         {
             string currentEnergy = r_ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
@@ -302,14 +299,14 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void getWheelsInfo(eVehicleType i_Type, Vehicle i_Vehicle)
+        static private void getWheelsInfo(eVehicleType i_Type, Vehicle i_Vehicle)
         {
             string manufacturer = r_ConsoleUI.GetField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
             string airPressure = r_ConsoleUI.GetField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
             setWheels(manufacturer, float.Parse(airPressure), i_Type, i_Vehicle);
         }
 
-        private void setWheels(string i_Manufacturer, float i_AirPressure, eVehicleType i_Type, Vehicle i_Vehicle)
+        static private void setWheels(string i_Manufacturer, float i_AirPressure, eVehicleType i_Type, Vehicle i_Vehicle)
         {
             try
             {
@@ -328,7 +325,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void setSpecificMembersPerVehicleType(Vehicle i_Vehicle)
+        static private void setSpecificMembersPerVehicleType(Vehicle i_Vehicle)
         {
             const char delimiter = '_';
             FieldInfo[] specificVehicleMembers = i_Vehicle.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic);
@@ -341,7 +338,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        private void setMember(Type i_MemberType, string i_MemberName, Vehicle i_Vehicle)
+        static private void setMember(Type i_MemberType, string i_MemberName, Vehicle i_Vehicle)
         {
             string input = "";
 
