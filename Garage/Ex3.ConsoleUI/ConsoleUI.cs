@@ -6,12 +6,12 @@ using Ex3.GarageLogic.Enums;
 
 namespace Ex3.ConsoleUI
 {
-    public class ConsoleUI
+    public static class ConsoleUI
     {
         private const string k_Quit = "Q";
         private const string k_StringEmpty = "";
 
-        public string Quit
+        public static string Quit
         {
             get
             {
@@ -19,7 +19,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        public void PrintMenu()
+        public static void PrintMenu()
         {
             StringBuilder menu = new StringBuilder();
             menu.AppendFormat("======================================================================================================{0}", Environment.NewLine);
@@ -35,12 +35,12 @@ namespace Ex3.ConsoleUI
             Console.WriteLine(menu);
         }
 
-        public void PrintToScreen(string i_Message)
+        public static void PrintToScreen(string i_Message)
         {
             Console.WriteLine(i_Message);
         }
 
-        public string GetUserInput(string i_TextToDisplay = k_StringEmpty)
+        public static string GetUserInput(string i_TextToDisplay = k_StringEmpty)
         {
             if (i_TextToDisplay.Length > 0)
             {
@@ -56,7 +56,7 @@ namespace Ex3.ConsoleUI
             return input;
         }
 
-        public string GetField(string i_Field, bool i_LettersNumbersOnly = false, bool i_NumbersOnly = false, bool i_LettersOnly = false)
+        public static string GetField(string i_Field, bool i_LettersNumbersOnly = false, bool i_NumbersOnly = false, bool i_LettersOnly = false)
         {
             string input = GetUserInput(i_Field);
 
@@ -88,7 +88,7 @@ namespace Ex3.ConsoleUI
             return input;
         }
 
-        private bool isOnlyLettersNumbers(string i_Input)
+        private static bool isOnlyLettersNumbers(string i_Input)
         {
             bool isValid = true;
 
@@ -104,7 +104,7 @@ namespace Ex3.ConsoleUI
             return isValid;
         }
 
-        private bool isOnlyLetters(string i_Input)
+        private static bool isOnlyLetters(string i_Input)
         {
             bool isValid = true;
 
@@ -120,7 +120,7 @@ namespace Ex3.ConsoleUI
             return isValid;
         }
 
-        private bool isOnlyNumbers(string i_Input)
+        private static bool isOnlyNumbers(string i_Input)
         {
             bool isValid = true;
 
@@ -137,7 +137,7 @@ namespace Ex3.ConsoleUI
             return isValid;
         }
 
-        public TEnum ParseEnum<TEnum>(string i_Value)
+        public static TEnum ParseEnum<TEnum>(string i_Value)
         {
             TEnum convertedEnum;
             int toInt = convertToInt(i_Value);
@@ -152,7 +152,7 @@ namespace Ex3.ConsoleUI
             return convertedEnum;
         }
 
-        public void CreateEnumArray<TEbum>()
+        public static void CreateEnumArray<TEbum>()
         {
             StringBuilder typeMenu = new StringBuilder();
             string[] enumTypes = Enum.GetNames(typeof(TEbum));
@@ -167,7 +167,7 @@ namespace Ex3.ConsoleUI
             PrintToScreen(typeMenu.ToString());
         }
 
-        private int convertToInt(string i_Value)
+        private static int convertToInt(string i_Value)
         {
             bool isInt = int.TryParse(i_Value, out int valueInt);
             while (!isInt)
@@ -179,7 +179,7 @@ namespace Ex3.ConsoleUI
             return valueInt;
         }
 
-        public string FindEnumType(Type i_Type)
+        public static string FindEnumType(Type i_Type)
         {
             string input;
 
@@ -228,7 +228,7 @@ namespace Ex3.ConsoleUI
             return input;
         }
 
-        public string HandleBooleanType(string i_MemberName)
+        public static string HandleBooleanType(string i_MemberName)
         {
             PrintToScreen(string.Format("1 - Yes{0}2 - No", Environment.NewLine));
             string input = GetUserInput("Your Choice: ");

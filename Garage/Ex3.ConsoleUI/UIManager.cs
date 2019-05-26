@@ -7,21 +7,21 @@ using System.Reflection;
 
 namespace Ex3.ConsoleUI
 {
-   static class UIManager
+    static class UIManager
     {
         // Members
-        private static readonly ConsoleUI r_ConsoleUI =new ConsoleUI();
+        //  private static readonly ConsoleUI ConsoleUI =new ConsoleUI();
         private const bool v_LettersNumbersOnly = true;
         private const bool v_NumbersOnly = true;
         private const bool v_LettersOnly = true;
         private const int k_EnumDefault = 0;
         // Methods
-      
+
 
         static public void StartMenu()
         {
-            r_ConsoleUI.PrintMenu();
-            string userInput = r_ConsoleUI.GetUserInput();
+            ConsoleUI.PrintMenu();
+            string userInput = ConsoleUI.GetUserInput();
             parseUserInput(userInput);
         }
 
@@ -36,7 +36,7 @@ namespace Ex3.ConsoleUI
             }
             catch (Exception ex)
             {
-                r_ConsoleUI.PrintToScreen("Failed to get user choice, please try again");
+                ConsoleUI.PrintToScreen("Failed to get user choice, please try again");
                 Console.WriteLine(ex.Message);
                 StartMenu();
             }
@@ -68,7 +68,7 @@ namespace Ex3.ConsoleUI
                     displayFullDetails();
                     break;
                 default:
-                    r_ConsoleUI.PrintToScreen("Invalid input. Please choose an option from the menu");
+                    ConsoleUI.PrintToScreen("Invalid input. Please choose an option from the menu");
                     StartMenu();
                     break;
             }
@@ -78,129 +78,129 @@ namespace Ex3.ConsoleUI
 
         static private void changeVehicleStatus()
         {
-            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
-            string newStatus = r_ConsoleUI.GetField("New Status: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            eVehicleStatus statusEnum = r_ConsoleUI.ParseEnum<eVehicleStatus>(newStatus);
+            string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            ConsoleUI.CreateEnumArray<eVehicleStatus>();
+            string newStatus = ConsoleUI.GetField("New Status: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            eVehicleStatus statusEnum = ConsoleUI.ParseEnum<eVehicleStatus>(newStatus);
             try
             {
                 Garage.ChangeVehicleStatus(licenseNumber, statusEnum);
-                r_ConsoleUI.PrintToScreen(string.Format("SUCCESS: Vehicle status was changed successfully{0}", Environment.NewLine));
+                ConsoleUI.PrintToScreen(string.Format("SUCCESS: Vehicle status was changed successfully{0}", Environment.NewLine));
             }
             catch (ArgumentException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 changeVehicleStatus();
             }
             catch
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, ConsoleUI.Quit));
                 changeVehicleStatus();
             }
         }
 
         static private void inflateTiresToMax()
         {
-            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
 
             try
             {
                 Garage.InflateWheelsToMax(licenseNumber);
-                r_ConsoleUI.PrintToScreen("SUCCESS: The wheels were successfully filled to maximum");
+                ConsoleUI.PrintToScreen("SUCCESS: The wheels were successfully filled to maximum");
             }
             catch (ArgumentException ex)
             {
-                r_ConsoleUI.PrintToScreen(ex.Message);
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(ex.Message);
+                ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 inflateTiresToMax();
             }
             catch (ValueOutOfRangeException ex)
             {
-                r_ConsoleUI.PrintToScreen(ex.Message);
-                r_ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(ex.Message);
+                ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 inflateTiresToMax();
             }
             catch
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, ConsoleUI.Quit));
                 inflateTiresToMax();
             }
         }
 
         static private void fillGasInVehicle()
         {
-            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            r_ConsoleUI.CreateEnumArray<eGasType>();
-            string gasType = r_ConsoleUI.GetField("Gas Type: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            eGasType gasTypeEnum = r_ConsoleUI.ParseEnum<eGasType>(gasType);
-            string amount = r_ConsoleUI.GetField("Amount: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            ConsoleUI.CreateEnumArray<eGasType>();
+            string gasType = ConsoleUI.GetField("Gas Type: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            eGasType gasTypeEnum = ConsoleUI.ParseEnum<eGasType>(gasType);
+            string amount = ConsoleUI.GetField("Amount: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
             {
                 Garage.FuelVehicle(licenseNumber, gasTypeEnum, float.Parse(amount));
-                r_ConsoleUI.PrintToScreen("SUCCESS: Gas was filled successfully");
+                ConsoleUI.PrintToScreen("SUCCESS: Gas was filled successfully");
             }
             catch (ArgumentException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 fillGasInVehicle();
             }
             catch (ValueOutOfRangeException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 fillGasInVehicle();
             }
             catch
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, ConsoleUI.Quit));
                 fillGasInVehicle();
             }
         }
 
         static private void chargeElectricVehicle()
         {
-            string licenseNumber = r_ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            string minutes = r_ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string minutes = ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
             float minutesFloat = float.Parse(minutes);
 
             try
             {
                 Garage.ChargeElectricVehicle(licenseNumber, minutesFloat / 60f);
-                r_ConsoleUI.PrintToScreen("SUCCESS: Vehicle was charged successfully");
+                ConsoleUI.PrintToScreen("SUCCESS: Vehicle was charged successfully");
             }
             catch (ArgumentException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 chargeElectricVehicle();
             }
             catch (ValueOutOfRangeException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 chargeElectricVehicle();
             }
             catch
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, ConsoleUI.Quit));
                 chargeElectricVehicle();
             }
         }
 
         static private void displayFullDetails()
         {
-            string licenseNumber = r_ConsoleUI.GetField("Please enter license number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string licenseNumber = ConsoleUI.GetField("Please enter license number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string vehicleDetails;
             try
             {
                 vehicleDetails = Garage.CreateStringVehicleDetails(licenseNumber);
-                r_ConsoleUI.PrintToScreen(vehicleDetails);
+                ConsoleUI.PrintToScreen(vehicleDetails);
             }
             catch (ArgumentException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 displayFullDetails();
             }
             catch
             {
-                r_ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, r_ConsoleUI.Quit));
+                ConsoleUI.PrintToScreen(string.Format("ERROR: An error occured...{0}Try again or press {1} to go back to the menu", Environment.NewLine, ConsoleUI.Quit));
                 displayFullDetails();
             }
         }
@@ -210,23 +210,23 @@ namespace Ex3.ConsoleUI
             const bool v_isStatusValid = true;
             List<string> vehicleLicenses;
 
-            r_ConsoleUI.PrintToScreen("Please choose vehicles status: ");
-            r_ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
-            r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
-            string status = r_ConsoleUI.GetField("", !v_LettersNumbersOnly, v_NumbersOnly);
+            ConsoleUI.PrintToScreen("Please choose vehicles status: ");
+           ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
+            ConsoleUI.CreateEnumArray<eVehicleStatus>();
+            string status = ConsoleUI.GetField("", !v_LettersNumbersOnly, v_NumbersOnly);
             if (status == k_EnumDefault.ToString())
             {
                 vehicleLicenses = Garage.GetVehiclesByStatus(k_EnumDefault, !v_isStatusValid);
             }
             else
             {
-                eVehicleStatus statusEnum = r_ConsoleUI.ParseEnum<eVehicleStatus>(status);
+                eVehicleStatus statusEnum = ConsoleUI.ParseEnum<eVehicleStatus>(status);
                 vehicleLicenses = Garage.GetVehiclesByStatus(statusEnum);
             }
 
             if (vehicleLicenses.Count == 0)
             {
-                r_ConsoleUI.PrintToScreen("NOT FOUND: There are no vehicles in this status");
+                ConsoleUI.PrintToScreen("NOT FOUND: There are no vehicles in this status");
             }
             else
             {
@@ -237,18 +237,18 @@ namespace Ex3.ConsoleUI
                     licenseList.Append(license);
                 }
 
-                r_ConsoleUI.PrintToScreen(licenseList.ToString());
+                ConsoleUI.PrintToScreen(licenseList.ToString());
             }
         }
 
         static private void insertNewVehicleToGarage()
         {
-            r_ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
-            string licenseNumber = r_ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
+            string licenseNumber = ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             if (Garage.IsVehicleInGarage(licenseNumber))
             {
                 Garage.ChangeVehicleStatus(licenseNumber, eVehicleStatus.InRepair);
-                r_ConsoleUI.PrintToScreen("STATUS UPDATE: Car already exists in the garage, changing its status to InRepair");
+                ConsoleUI.PrintToScreen("STATUS UPDATE: Car already exists in the garage, changing its status to InRepair");
             }
             else
             {
@@ -257,27 +257,27 @@ namespace Ex3.ConsoleUI
                 setVehicleOwnerInfo(out string o_Owner, out string o_Phone);
                 if (Garage.AddVehicleToGarage(vehicle, o_Phone, o_Owner))
                 {
-                    r_ConsoleUI.PrintToScreen("SUCCESS: Car was successfully inserted to the garage");
+                    ConsoleUI.PrintToScreen("SUCCESS: Car was successfully inserted to the garage");
                 }
                 else
                 {
-                    r_ConsoleUI.PrintToScreen("ERROR: An error occured while trying to insert the car to the garage");
+                    ConsoleUI.PrintToScreen("ERROR: An error occured while trying to insert the car to the garage");
                 }
             }
         }
 
         static private void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
         {
-            o_Owner = r_ConsoleUI.GetField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
-            o_Phone = r_ConsoleUI.GetField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            o_Owner = ConsoleUI.GetField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
+            o_Phone = ConsoleUI.GetField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
         }
 
         static private Vehicle setBasicVehicleInfo(string i_LicenseNumber)
         {
-            r_ConsoleUI.CreateEnumArray<eVehicleType>();
-            string type = r_ConsoleUI.GetField("Vehicle type: ", v_LettersNumbersOnly);
-            eVehicleType vehicleType = r_ConsoleUI.ParseEnum<eVehicleType>(type);
-            string model = r_ConsoleUI.GetField("Model's name: ", v_LettersNumbersOnly);
+            ConsoleUI.CreateEnumArray<eVehicleType>();
+            string type = ConsoleUI.GetField("Vehicle type: ", v_LettersNumbersOnly);
+            eVehicleType vehicleType = ConsoleUI.ParseEnum<eVehicleType>(type);
+            string model = ConsoleUI.GetField("Model's name: ", v_LettersNumbersOnly);
             Vehicle newVehicle = VehicleInitiator.CreateVehicle(i_LicenseNumber, vehicleType, model);
             setEngine(newVehicle, vehicleType);
             getWheelsInfo(vehicleType, newVehicle);
@@ -287,22 +287,22 @@ namespace Ex3.ConsoleUI
 
         static private void setEngine(Vehicle i_Vehicle, eVehicleType i_Type)
         {
-            string currentEnergy = r_ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string currentEnergy = ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
             try
             {
                 VehicleInitiator.InitEngine(i_Type, float.Parse(currentEnergy), out Engine engine, i_Vehicle);
             }
             catch (ValueOutOfRangeException ex)
             {
-                r_ConsoleUI.PrintToScreen(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, "Try again"));
+                ConsoleUI.PrintToScreen(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, "Try again"));
                 setEngine(i_Vehicle, i_Type);
             }
         }
 
         static private void getWheelsInfo(eVehicleType i_Type, Vehicle i_Vehicle)
         {
-            string manufacturer = r_ConsoleUI.GetField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
-            string airPressure = r_ConsoleUI.GetField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            string manufacturer = ConsoleUI.GetField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
+            string airPressure = ConsoleUI.GetField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
             setWheels(manufacturer, float.Parse(airPressure), i_Type, i_Vehicle);
         }
 
@@ -314,13 +314,13 @@ namespace Ex3.ConsoleUI
             }
             catch (ValueOutOfRangeException ex)
             {
-                r_ConsoleUI.PrintToScreen(ex.Message);
-                i_AirPressure = float.Parse(r_ConsoleUI.GetField("Try again - Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly));
+                ConsoleUI.PrintToScreen(ex.Message);
+                i_AirPressure = float.Parse(ConsoleUI.GetField("Try again - Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly));
                 setWheels(i_Manufacturer, i_AirPressure, i_Type, i_Vehicle);
             }
             catch
             {
-                r_ConsoleUI.PrintToScreen("Something went wrong... Try again");
+                ConsoleUI.PrintToScreen("Something went wrong... Try again");
                 getWheelsInfo(i_Type, i_Vehicle);
             }
         }
@@ -342,18 +342,18 @@ namespace Ex3.ConsoleUI
         {
             string input = "";
 
-            r_ConsoleUI.PrintToScreen(string.Format("{0}: ", i_MemberName));
+            ConsoleUI.PrintToScreen(string.Format("{0}: ", i_MemberName));
             if (i_MemberType.IsEnum)
             {
-                input = r_ConsoleUI.FindEnumType(i_MemberType);
+                input = ConsoleUI.FindEnumType(i_MemberType);
             }
             else if (i_MemberType == typeof(Boolean))
             {
-                input = r_ConsoleUI.HandleBooleanType(i_MemberName);
+                input = ConsoleUI.HandleBooleanType(i_MemberName);
             }
             else
             {
-                input = r_ConsoleUI.GetUserInput();
+                input = ConsoleUI.GetUserInput();
             }
 
             if (input.Length > 0)
@@ -364,12 +364,12 @@ namespace Ex3.ConsoleUI
                 }
                 catch (InvalidCastException)
                 {
-                    r_ConsoleUI.PrintToScreen(string.Format("Failed to handle input, since it's not from type {0}. Try again...", i_MemberType));
+                    ConsoleUI.PrintToScreen(string.Format("Failed to handle input, since it's not from type {0}. Try again...", i_MemberType));
                     setMember(i_MemberType, i_MemberName, i_Vehicle);
                 }
                 catch (Exception ex)
                 {
-                    r_ConsoleUI.PrintToScreen(string.Format("An error occured, please try again...{0}{1}", Environment.NewLine, ex.Message));
+                    ConsoleUI.PrintToScreen(string.Format("An error occured, please try again...{0}{1}", Environment.NewLine, ex.Message));
                     setMember(i_MemberType, i_MemberName, i_Vehicle);
                 }
             }
