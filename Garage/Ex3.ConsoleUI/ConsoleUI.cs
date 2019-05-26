@@ -9,6 +9,8 @@ namespace Ex3.ConsoleUI
     public class ConsoleUI
     {
         private const string k_Quit = "Q";
+        private const string k_StringEmpty = "";
+
         public string Quit
         {
             get
@@ -38,7 +40,7 @@ namespace Ex3.ConsoleUI
             Console.WriteLine(i_Message);
         }
 
-        public string GetUserInput(string i_TextToDisplay="")
+        public string GetUserInput(string i_TextToDisplay = k_StringEmpty)
         {
             if (i_TextToDisplay.Length > 0)
             {
@@ -124,7 +126,8 @@ namespace Ex3.ConsoleUI
 
             foreach (char character in i_Input)
             {
-                if (!char.IsDigit(character) && character != '.') // dot in case of float
+                // allow dot in case of float
+                if (!char.IsDigit(character) && character != '.') 
                 {
                     isValid = false;
                     break;
@@ -219,7 +222,7 @@ namespace Ex3.ConsoleUI
             else
             {
                 PrintToScreen("Member's type is invalid, moving on...");
-                input = "";
+                input = string.Empty;
             }
 
             return input;

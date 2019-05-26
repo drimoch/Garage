@@ -7,20 +7,20 @@ namespace Ex3.GarageLogic
 {
     public static class Garage
     {
-        //Members
         private static List<VehicleInGarage> m_Vehicles = new List<VehicleInGarage>();
+
         internal static List<VehicleInGarage> Vehicles
         {
             get
             {
                 return m_Vehicles;
             }
+
             set
             {
                 if (isVehicleListValid(value))
                 {
                     m_Vehicles = value;
-
                 }
                 else
                 {
@@ -151,7 +151,6 @@ namespace Ex3.GarageLogic
             {
                 throw new ArgumentException("Vehicle has fuel engine");
             }
-
         }
 
         public static bool AddVehicleToGarage(Vehicle i_Vehicle, string i_PhoneNumber, string i_Owner)

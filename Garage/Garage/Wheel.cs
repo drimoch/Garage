@@ -8,8 +8,9 @@ namespace Ex3.GarageLogic
     {
         private const float k_MinAirPressure = 0;
         private readonly string r_Manufacturer;
-        private float m_CurrentAirPressure;
         private readonly float r_MaxAirPressure;
+        private float m_CurrentAirPressure;
+
         public Wheel(string i_Manufacturer, float i_MaxAirPressure, float i_CurrentAirPressure)
         {
             r_Manufacturer = i_Manufacturer;
@@ -44,6 +45,7 @@ namespace Ex3.GarageLogic
             {
                 return m_CurrentAirPressure;
             }
+
             set
             {
                 if (value > r_MaxAirPressure || value < k_MinAirPressure)

@@ -9,7 +9,7 @@ namespace Ex3.GarageLogic
         private const float k_MinEnergy = 0;
         private readonly float r_MaxEnergy;
         private float m_CurrentEnergy;
-        private  float m_CurrentEnergyPercent;
+        private float m_CurrentEnergyPercent;
 
         public Engine(float i_CurrentEnergy, float i_MaxEnergy)
         {
@@ -31,6 +31,7 @@ namespace Ex3.GarageLogic
                 CurrentEnergy = i_CurrentEnergy;
             }
         }
+
         public float CurrentEnergyPercent
         {            
             get
@@ -46,12 +47,14 @@ namespace Ex3.GarageLogic
                 return r_MaxEnergy;
             }
         }
+
         public float CurrentEnergy
         {
             get
             {
                 return m_CurrentEnergy;
             }
+
             set
             {
                 if (value > r_MaxEnergy || value < k_MinEnergy)

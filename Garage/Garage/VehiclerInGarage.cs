@@ -5,12 +5,13 @@ using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
-    class VehicleInGarage
+    public class VehicleInGarage
     {
+        private readonly Vehicle r_Vehicle;
         private eVehicleStatus m_VehicleStatus;
         private string m_Owner;
         private string m_PhoneNumber;
-        private readonly Vehicle r_Vehicle;
+
         public VehicleInGarage(string i_Owner, string i_PhoneNumber, Vehicle i_vehicle)
         {
             m_VehicleStatus = eVehicleStatus.InRepair;
@@ -19,17 +20,13 @@ namespace Ex3.GarageLogic
             r_Vehicle = i_vehicle;
         }
 
-        public VehicleInGarage()
-        {
-
-        }
-
         internal eVehicleStatus VehicleStatus
         {
             get
             {
                 return m_VehicleStatus;
             }
+
             set
             {
                 m_VehicleStatus = value;
@@ -42,13 +39,20 @@ namespace Ex3.GarageLogic
             {
                 return m_Owner;
             }
+
             set
             {
                 m_Owner = value;
             }
         }
 
-        internal Vehicle Vehicle { get {return r_Vehicle; } }
+        internal Vehicle Vehicle
+        {
+            get
+            {
+                return r_Vehicle;
+            }
+        }
 
         public override string ToString()
         {

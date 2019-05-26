@@ -5,21 +5,14 @@ using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
-    class Car : Vehicle
+    public class Car : Vehicle
     {
-        //Members
         private eColor m_Color;
         private eNumOfDoors m_NumOfDoors;
-        public Car(string i_LicenseNumber, string i_Model): base(i_LicenseNumber, i_Model)
-        {
 
-        }
-        /*    public Car(eColor i_Color, eNumOfDoors i_NumOfDoors, string i_LicenseNumber, string i_ModelName, List<Wheel> i_Wheels, Engine i_Engine)
-            : base(i_LicenseNumber, i_ModelName, i_Wheels, i_Engine)
+        public Car(string i_LicenseNumber, string i_Model) : base(i_LicenseNumber, i_Model)
         {
-            m_Color = i_Color;
-            m_NumOfDoors = i_NumOfDoors;
-        }*/
+        }
 
         public eColor Color
         {

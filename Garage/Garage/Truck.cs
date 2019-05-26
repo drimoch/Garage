@@ -5,23 +5,15 @@ using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
-    class Truck : Vehicle
+    public class Truck : Vehicle
     {
         // Members
         private float m_ContainerVolume;
         private bool m_CarriesDangerousSubstances;
+
         public Truck(string i_LicenseNumber, string i_Model) : base(i_LicenseNumber, i_Model)
         {
-
         }
-
-        /*public Truck(eGasType i_GasType, float i_ContainerVolume, bool i_CarriesDangerousSubstances,
-            string i_LicenseNumber, string i_ModelName,  List<Wheel> i_Wheels, Engine i_Engine)
-            : base(i_LicenseNumber, i_ModelName, i_Wheels, i_Engine)
-        {
-            r_CarriesDangerousSubstances = i_CarriesDangerousSubstances;
-            r_ContainerVolume = i_ContainerVolume;
-        }*/
 
         public float ContainerVolume
         {
