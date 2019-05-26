@@ -1,48 +1,48 @@
-﻿using Ex3.GarageLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Ex3.GarageLogic.Enums;
 using System.Reflection;
+using Ex3.GarageLogic;
+using Ex3.GarageLogic.Enums;
 
 namespace Ex3.ConsoleUI
 {
-    static class UIManager
+    public static class UIManager
     {
-        // Members
-        //  private static readonly ConsoleUI ConsoleUI =new ConsoleUI();
         private const bool v_LettersNumbersOnly = true;
         private const bool v_NumbersOnly = true;
         private const bool v_LettersOnly = true;
         private const int k_EnumDefault = 0;
-        // Methods
 
-
-        static public void StartMenu()
+        public static void StartMenu()
         {
             ConsoleUI.PrintMenu();
             string userInput = ConsoleUI.GetUserInput();
             parseUserInput(userInput);
         }
 
-        static private void parseUserInput(string i_UserInput)
+        private static void parseUserInput(string i_UserInput)
         {
-            int input;
-
             try
             {
-                input = int.Parse(i_UserInput);
-                handleUserInput(input);
+                if(int.TryParse(i_UserInput, out int input))
+                {
+                    handleUserInput(input);
+                }
+                else
+                {
+                    ConsoleUI.PrintToScreen("ERROR: Failed to get user input, please choose a number from the menu");
+                    StartMenu();
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ConsoleUI.PrintToScreen("Failed to get user choice, please try again");
-                Console.WriteLine(ex.Message);
+                ConsoleUI.PrintToScreen("ERROR: Something went wrong... Please try again");
                 StartMenu();
             }
         }
 
-        static private void handleUserInput(int i_Input)
+        private static void handleUserInput(int i_Input)
         {
             switch (i_Input)
             {
@@ -76,7 +76,7 @@ namespace Ex3.ConsoleUI
             StartMenu();
         }
 
-        static private void changeVehicleStatus()
+        private static void changeVehicleStatus()
         {
             string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             ConsoleUI.CreateEnumArray<eVehicleStatus>();
@@ -99,7 +99,7 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void inflateTiresToMax()
+        private static void inflateTiresToMax()
         {
             string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
 
@@ -110,13 +110,11 @@ namespace Ex3.ConsoleUI
             }
             catch (ArgumentException ex)
             {
-                ConsoleUI.PrintToScreen(ex.Message);
                 ConsoleUI.PrintToScreen(string.Format("ERROR: {0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 inflateTiresToMax();
             }
             catch (ValueOutOfRangeException ex)
             {
-                ConsoleUI.PrintToScreen(ex.Message);
                 ConsoleUI.PrintToScreen(string.Format("{0}{1}Try again or press {2} to go back to the menu", ex.Message, Environment.NewLine, ConsoleUI.Quit));
                 inflateTiresToMax();
             }
@@ -127,16 +125,17 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void fillGasInVehicle()
+        private static void fillGasInVehicle()
         {
             string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             ConsoleUI.CreateEnumArray<eGasType>();
             string gasType = ConsoleUI.GetField("Gas Type: ", !v_LettersNumbersOnly, v_NumbersOnly);
             eGasType gasTypeEnum = ConsoleUI.ParseEnum<eGasType>(gasType);
-            string amount = ConsoleUI.GetField("Amount: ", !v_LettersNumbersOnly, v_NumbersOnly);
+            float gasAmount = ConsoleUI.ConvertToFloat(ConsoleUI.GetUserInput("Amount: "));
+
             try
             {
-                Garage.FuelVehicle(licenseNumber, gasTypeEnum, float.Parse(amount));
+                Garage.FuelVehicle(licenseNumber, gasTypeEnum, gasAmount);
                 ConsoleUI.PrintToScreen("SUCCESS: Gas was filled successfully");
             }
             catch (ArgumentException ex)
@@ -156,15 +155,15 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void chargeElectricVehicle()
+        private static void chargeElectricVehicle()
         {
+            const float k_MinutesInHour = 60f;
             string licenseNumber = ConsoleUI.GetField("License Number: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            string minutes = ConsoleUI.GetField("Number of minutes to charge: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            float minutesFloat = float.Parse(minutes);
+            float minutesFloat = ConsoleUI.ConvertToFloat(ConsoleUI.GetUserInput("Number of minutes to charge: "));
 
             try
             {
-                Garage.ChargeElectricVehicle(licenseNumber, minutesFloat / 60f);
+                Garage.ChargeElectricVehicle(licenseNumber, minutesFloat / k_MinutesInHour);
                 ConsoleUI.PrintToScreen("SUCCESS: Vehicle was charged successfully");
             }
             catch (ArgumentException ex)
@@ -184,10 +183,11 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void displayFullDetails()
+        private static void displayFullDetails()
         {
             string licenseNumber = ConsoleUI.GetField("Please enter license number: ", !v_LettersNumbersOnly, v_NumbersOnly);
             string vehicleDetails;
+
             try
             {
                 vehicleDetails = Garage.CreateStringVehicleDetails(licenseNumber);
@@ -205,18 +205,18 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void displayCarLicenseNumbers()
+        private static void displayCarLicenseNumbers()
         {
-            const bool v_isStatusValid = true;
+            const bool v_FilterByStatus = true;
             List<string> vehicleLicenses;
 
             ConsoleUI.PrintToScreen("Please choose vehicles status: ");
-           ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
+            ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
             ConsoleUI.CreateEnumArray<eVehicleStatus>();
-            string status = ConsoleUI.GetField("", !v_LettersNumbersOnly, v_NumbersOnly);
+            string status = ConsoleUI.GetField(string.Empty, !v_LettersNumbersOnly, v_NumbersOnly);
             if (status == k_EnumDefault.ToString())
             {
-                vehicleLicenses = Garage.GetVehiclesByStatus(k_EnumDefault, !v_isStatusValid);
+                vehicleLicenses = Garage.GetVehiclesByStatus(k_EnumDefault, !v_FilterByStatus);
             }
             else
             {
@@ -233,15 +233,14 @@ namespace Ex3.ConsoleUI
                 StringBuilder licenseList = new StringBuilder("SUCCESS: Vehicle license numbers: ");
                 foreach (string license in vehicleLicenses)
                 {
-                    licenseList.Append(Environment.NewLine);
-                    licenseList.Append(license);
+                    licenseList.AppendFormat("{0}{1}", Environment.NewLine, license);
                 }
 
                 ConsoleUI.PrintToScreen(licenseList.ToString());
             }
         }
 
-        static private void insertNewVehicleToGarage()
+        private static void insertNewVehicleToGarage()
         {
             ConsoleUI.PrintToScreen(string.Format("Please enter the following details:{0}", Environment.NewLine));
             string licenseNumber = ConsoleUI.GetField("License number: ", !v_LettersNumbersOnly, v_NumbersOnly);
@@ -266,16 +265,16 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
+        private static void setVehicleOwnerInfo(out string o_Owner, out string o_Phone)
         {
             o_Owner = ConsoleUI.GetField("Owner's name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
             o_Phone = ConsoleUI.GetField("Phone number: ", !v_LettersNumbersOnly, v_NumbersOnly);
         }
 
-        static private Vehicle setBasicVehicleInfo(string i_LicenseNumber)
+        private static Vehicle setBasicVehicleInfo(string i_LicenseNumber)
         {
             ConsoleUI.CreateEnumArray<eVehicleType>();
-            string type = ConsoleUI.GetField("Vehicle type: ", v_LettersNumbersOnly);
+            string type = ConsoleUI.GetField("Vehicle type: ", !v_LettersNumbersOnly, v_NumbersOnly);
             eVehicleType vehicleType = ConsoleUI.ParseEnum<eVehicleType>(type);
             string model = ConsoleUI.GetField("Model's name: ", v_LettersNumbersOnly);
             Vehicle newVehicle = VehicleInitiator.CreateVehicle(i_LicenseNumber, vehicleType, model);
@@ -285,12 +284,13 @@ namespace Ex3.ConsoleUI
             return newVehicle;
         }
 
-        static private void setEngine(Vehicle i_Vehicle, eVehicleType i_Type)
-        {
-            string currentEnergy = ConsoleUI.GetField("Amount of energy left: ", !v_LettersNumbersOnly, v_NumbersOnly);
+        private static void setEngine(Vehicle i_Vehicle, eVehicleType i_Type)
+        {            
+            float currentEnergy = ConsoleUI.ConvertToFloat(ConsoleUI.GetUserInput("Amount of energy left: "));
+
             try
             {
-                VehicleInitiator.InitEngine(i_Type, float.Parse(currentEnergy), out Engine engine, i_Vehicle);
+                VehicleInitiator.InitEngine(i_Type, currentEnergy, out Engine engine, i_Vehicle);
             }
             catch (ValueOutOfRangeException ex)
             {
@@ -299,14 +299,15 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void getWheelsInfo(eVehicleType i_Type, Vehicle i_Vehicle)
+        private static void getWheelsInfo(eVehicleType i_Type, Vehicle i_Vehicle)
         {
             string manufacturer = ConsoleUI.GetField("Manufacturer name: ", !v_LettersNumbersOnly, !v_NumbersOnly, v_LettersOnly);
-            string airPressure = ConsoleUI.GetField("Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly);
-            setWheels(manufacturer, float.Parse(airPressure), i_Type, i_Vehicle);
+            float airPressure = ConsoleUI.ConvertToFloat(ConsoleUI.GetUserInput("Current air pressure: "));
+
+            setWheels(manufacturer, airPressure, i_Type, i_Vehicle);
         }
 
-        static private void setWheels(string i_Manufacturer, float i_AirPressure, eVehicleType i_Type, Vehicle i_Vehicle)
+        private static void setWheels(string i_Manufacturer, float i_AirPressure, eVehicleType i_Type, Vehicle i_Vehicle)
         {
             try
             {
@@ -315,7 +316,7 @@ namespace Ex3.ConsoleUI
             catch (ValueOutOfRangeException ex)
             {
                 ConsoleUI.PrintToScreen(ex.Message);
-                i_AirPressure = float.Parse(ConsoleUI.GetField("Try again - Current air pressure: ", !v_LettersNumbersOnly, v_NumbersOnly));
+                i_AirPressure = ConsoleUI.ConvertToFloat(ConsoleUI.GetUserInput("Try again - Current air pressure: "));
                 setWheels(i_Manufacturer, i_AirPressure, i_Type, i_Vehicle);
             }
             catch
@@ -325,29 +326,29 @@ namespace Ex3.ConsoleUI
             }
         }
 
-        static private void setSpecificMembersPerVehicleType(Vehicle i_Vehicle)
+        private static void setSpecificMembersPerVehicleType(Vehicle i_Vehicle)
         {
-            const char delimiter = '_';
+            const char k_Delimiter = '_';
             FieldInfo[] specificVehicleMembers = i_Vehicle.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic);
 
             foreach (FieldInfo member in specificVehicleMembers)
             {
-                int delimiterIndex = member.Name.IndexOf(delimiter); // trim member's prefix
+                int delimiterIndex = member.Name.IndexOf(k_Delimiter); // trim member's prefix
                 string memberName = member.Name.Substring(delimiterIndex + 1, member.Name.Length - 2);
                 setMember(member.FieldType, memberName, i_Vehicle);
             }
         }
 
-        static private void setMember(Type i_MemberType, string i_MemberName, Vehicle i_Vehicle)
+        private static void setMember(Type i_MemberType, string i_MemberName, Vehicle i_Vehicle)
         {
-            string input = "";
+            string input = string.Empty;
 
             ConsoleUI.PrintToScreen(string.Format("{0}: ", i_MemberName));
             if (i_MemberType.IsEnum)
             {
                 input = ConsoleUI.FindEnumType(i_MemberType);
             }
-            else if (i_MemberType == typeof(Boolean))
+            else if (i_MemberType == typeof(bool))
             {
                 input = ConsoleUI.HandleBooleanType(i_MemberName);
             }

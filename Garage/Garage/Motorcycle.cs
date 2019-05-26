@@ -7,7 +7,6 @@ namespace Ex3.GarageLogic
 {
     public class Motorcycle : Vehicle
     {
-        // Members
         private eLicenseType m_LicenseType;
         private int m_EngineCapacity;
 

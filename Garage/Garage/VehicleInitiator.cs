@@ -112,6 +112,7 @@ namespace Ex3.GarageLogic
         public static Vehicle CreateVehicle(string i_LicenseNumber, eVehicleType i_Type, string i_Model)
         {
             Vehicle newVehicle = null;
+
             switch (i_Type)
             {
                 case eVehicleType.ElectricCar:

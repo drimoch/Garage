@@ -7,20 +7,20 @@ namespace Ex3.GarageLogic
 {
     public static class Garage
     {
-        private static List<VehicleInGarage> m_Vehicles = new List<VehicleInGarage>();
+        private static List<VehicleInGarage> s_Vehicles = new List<VehicleInGarage>();
 
         internal static List<VehicleInGarage> Vehicles
         {
             get
             {
-                return m_Vehicles;
+                return s_Vehicles;
             }
 
             set
             {
                 if (isVehicleListValid(value))
                 {
-                    m_Vehicles = value;
+                    s_Vehicles = value;
                 }
                 else
                 {
@@ -29,13 +29,14 @@ namespace Ex3.GarageLogic
             }
         }
 
-        private static bool isVehicleListValid(List<VehicleInGarage> i_vehiclesInGarage)
+        private static bool isVehicleListValid(List<VehicleInGarage> i_VehiclesInGarage)
         {
             int sameVehicleCounter = 0;
             bool listIsValid = false;
-            foreach (VehicleInGarage vehicleInGarage in i_vehiclesInGarage)
+
+            foreach (VehicleInGarage vehicleInGarage in i_VehiclesInGarage)
             {
-                foreach (VehicleInGarage vehicleToCompare in i_vehiclesInGarage)
+                foreach (VehicleInGarage vehicleToCompare in i_VehiclesInGarage)
                 {
                     if (vehicleInGarage.Vehicle.Equals(vehicleToCompare.Vehicle))
                     {
@@ -44,20 +45,18 @@ namespace Ex3.GarageLogic
                 }
             }
 
-            if (sameVehicleCounter == i_vehiclesInGarage.Count)
-            {
-                listIsValid = true;
-            }
+            listIsValid = sameVehicleCounter == i_VehiclesInGarage.Count;      
 
             return listIsValid;
         }
 
-        public static List<string> GetVehiclesByStatus(Enums.eVehicleStatus i_Status, bool i_IsStatusValid = true)
+        public static List<string> GetVehiclesByStatus(Enums.eVehicleStatus i_Status, bool i_FilterByStatus = true)
         {
             List<string> carsInGarage = new List<string>();
-            foreach (VehicleInGarage vehicle in m_Vehicles)
+
+            foreach (VehicleInGarage vehicle in s_Vehicles)
             {
-                if (!i_IsStatusValid)
+                if (!i_FilterByStatus)
                 {
                     carsInGarage.Add(vehicle.Vehicle.LicenseNumber);
                 }
@@ -74,7 +73,7 @@ namespace Ex3.GarageLogic
         {
             bool isFound = false;
 
-            foreach (VehicleInGarage vehicle in m_Vehicles)
+            foreach (VehicleInGarage vehicle in s_Vehicles)
             {
                 if (vehicle.Vehicle.LicenseNumber == i_LienceNumber)
                 {
@@ -88,7 +87,7 @@ namespace Ex3.GarageLogic
 
         private static VehicleInGarage getVehicleByLicenseNumber(string i_LienseNumber)
         {
-            foreach (VehicleInGarage vehicle in m_Vehicles)
+            foreach (VehicleInGarage vehicle in s_Vehicles)
             {
                 if (vehicle.Vehicle.LicenseNumber == i_LienseNumber)
                 {
@@ -103,6 +102,7 @@ namespace Ex3.GarageLogic
         {
             VehicleInGarage vehicle = getVehicleByLicenseNumber(i_LicenseNumber);
             StringBuilder vehicleDetails = new StringBuilder("SUCCESS: Vehicle Details:");
+
             vehicleDetails.AppendFormat("{0}----------------------{1}", Environment.NewLine, Environment.NewLine);
             vehicleDetails.AppendFormat(vehicle.ToString());
 
@@ -117,6 +117,7 @@ namespace Ex3.GarageLogic
         public static void InflateWheelsToMax(string i_LicsenseNumber)
         {
             List<Wheel> wheelsToInflate = getVehicleByLicenseNumber(i_LicsenseNumber).Vehicle.Wheels;
+
             foreach (Wheel wheel in wheelsToInflate)
             {
                 wheel.CurrentAirPressure = wheel.MaxAirPressure;
@@ -134,7 +135,7 @@ namespace Ex3.GarageLogic
             }
             else
             {
-                throw new ArgumentException("Vehicle has electric engine");
+                throw new ArgumentException("Vehicle has an electric engine");
             }
         }
 
@@ -149,7 +150,7 @@ namespace Ex3.GarageLogic
             }
             else
             {
-                throw new ArgumentException("Vehicle has fuel engine");
+                throw new ArgumentException("Vehicle has a fuel engine");
             }
         }
 
@@ -160,7 +161,7 @@ namespace Ex3.GarageLogic
 
             if (!isInGarage)
             {
-                m_Vehicles.Add(new VehicleInGarage(i_Owner, i_PhoneNumber, i_Vehicle));
+                s_Vehicles.Add(new VehicleInGarage(i_Owner, i_PhoneNumber, i_Vehicle));
                 success = true;
             }
 

@@ -7,7 +7,6 @@ namespace Ex3.GarageLogic
 {
     public class Truck : Vehicle
     {
-        // Members
         private float m_ContainerVolume;
         private bool m_CarriesDangerousSubstances;
 

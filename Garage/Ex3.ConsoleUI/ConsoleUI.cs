@@ -126,8 +126,7 @@ namespace Ex3.ConsoleUI
 
             foreach (char character in i_Input)
             {
-                // allow dot in case of float
-                if (!char.IsDigit(character) && character != '.') 
+                if (!char.IsDigit(character)) 
                 {
                     isValid = false;
                     break;
@@ -140,11 +139,12 @@ namespace Ex3.ConsoleUI
         public static TEnum ParseEnum<TEnum>(string i_Value)
         {
             TEnum convertedEnum;
-            int toInt = convertToInt(i_Value);
+            int toInt = ConvertToInt(i_Value);
+
             while (!Enum.IsDefined(typeof(TEnum), toInt))
             {
                 i_Value = GetUserInput("Invalid input, please choose a number in the displayed range: ");
-                toInt = convertToInt(i_Value);
+                toInt = ConvertToInt(i_Value);
             }
 
             convertedEnum = (TEnum)Enum.ToObject(typeof(TEnum), toInt);
@@ -167,16 +167,30 @@ namespace Ex3.ConsoleUI
             PrintToScreen(typeMenu.ToString());
         }
 
-        private static int convertToInt(string i_Value)
+        public static int ConvertToInt(string i_Value)
         {
             bool isInt = int.TryParse(i_Value, out int valueInt);
+
             while (!isInt)
             {
-                i_Value = GetUserInput("Failed to handle the field, please choose a number from the available values: ");
+                i_Value = GetUserInput("ERROR: Field must be a number");
                 isInt = int.TryParse(i_Value, out valueInt);
             }
 
             return valueInt;
+        }
+
+        public static float ConvertToFloat(string i_Value)
+        {
+            bool isFloat = float.TryParse(i_Value, out float valueFloat);
+
+            while (!isFloat)
+            {
+                i_Value = GetUserInput("ERROR: Field must be a number");
+                isFloat = float.TryParse(i_Value, out valueFloat);
+            }
+
+            return valueFloat;
         }
 
         public static string FindEnumType(Type i_Type)

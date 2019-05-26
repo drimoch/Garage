@@ -36,6 +36,7 @@ namespace Ex3.GarageLogic
         public override string ToString()
         {
             StringBuilder engineDetails = new StringBuilder();
+
             engineDetails.AppendFormat("Gas Type: {0}{1}", r_GasType, Environment.NewLine);
             engineDetails.Append(base.ToString());
 

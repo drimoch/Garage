@@ -82,6 +82,7 @@ namespace Ex3.GarageLogic
         public override string ToString()
         {
             StringBuilder engineDetails = new StringBuilder();
+
             engineDetails.AppendFormat("Current Gas/Energy: {0}{1}", m_CurrentEnergy, Environment.NewLine);
             engineDetails.AppendFormat("Energy Left: {0}%{1}", m_CurrentEnergyPercent, Environment.NewLine);
 

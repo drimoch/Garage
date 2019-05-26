@@ -6,17 +6,16 @@ namespace Ex3.GarageLogic
 {
    public abstract class Vehicle
    {
+        private readonly string r_LicenseNumber;
+        private readonly string r_ModelName;
+        private List<Wheel> m_Wheels;
+        private Engine m_Engine;
+
         public Vehicle(string i_LicenseNumber, string i_Model)
         {
             r_LicenseNumber = i_LicenseNumber;
             r_ModelName = i_Model;
         }
-
-        // Members
-        private readonly string r_LicenseNumber;
-        private readonly string r_ModelName;
-        private List<Wheel> m_Wheels;
-        private Engine m_Engine;
 
         public string LicenseNumber
         {
