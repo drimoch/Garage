@@ -5,37 +5,16 @@ using Ex3.GarageLogic.Enums;
 
 namespace Ex3.GarageLogic
 {
-    class Motorcycle : Vehicle
+    public class Motorcycle : Vehicle
     {
-        //Members
+        // Members
         private eLicenseType m_LicenseType;
         private int m_EngineCapacity;
+
         public Motorcycle(string i_LicenseNumber, string i_Model) : base(i_LicenseNumber, i_Model)
         {
-
         }
-        /*public Motorcycle(eLicenseType i_LicenseType, int i_EngineCapacity, string i_LicenseNumber, string i_ModelName, List<Wheel> i_Wheels, Engine i_Engine)
-            : base(i_LicenseNumber, i_ModelName, i_Wheels, i_Engine)
-        {
-            if (i_EngineCapacity > 0)
-            {
-                m_EngineCapacity = i_EngineCapacity;
-            }
-            else
-            {
-                throw new ArgumentException("Enigne capacity must be positive value");
-            }
-
-            if (Enum.IsDefined(typeof(eLicenseType), i_LicenseType))
-            {
-                m_LicenseType = i_LicenseType;
-            }
-            else
-            {
-                throw new FormatException("Invalid license type");
-            }
-        }*/
-
+        
         public eLicenseType LicenseType
         {
             get

@@ -1,21 +1,20 @@
-﻿using Ex3.GarageLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Ex3.GarageLogic.Enums;
 using System.Reflection;
+using Ex3.GarageLogic;
+using Ex3.GarageLogic.Enums;
 
 namespace Ex3.ConsoleUI
 {
-    class UIManager
+    public class UIManager
     {
-        // Members
-        private readonly ConsoleUI r_ConsoleUI;
         private const bool v_LettersNumbersOnly = true;
         private const bool v_NumbersOnly = true;
         private const bool v_LettersOnly = true;
         private const int k_EnumDefault = 0;
-        // Methods
+        private readonly ConsoleUI r_ConsoleUI;
+
         public UIManager()
         {
             r_ConsoleUI = new ConsoleUI();
@@ -217,7 +216,7 @@ namespace Ex3.ConsoleUI
             r_ConsoleUI.PrintToScreen("Please choose vehicles status: ");
             r_ConsoleUI.PrintToScreen(string.Format("{0} - None", k_EnumDefault.ToString()));
             r_ConsoleUI.CreateEnumArray<eVehicleStatus>();
-            string status = r_ConsoleUI.GetField("", !v_LettersNumbersOnly, v_NumbersOnly);
+            string status = r_ConsoleUI.GetField(string.Empty, !v_LettersNumbersOnly, v_NumbersOnly);
             if (status == k_EnumDefault.ToString())
             {
                 vehicleLicenses = Garage.GetVehiclesByStatus(k_EnumDefault, !v_isStatusValid);
@@ -344,14 +343,14 @@ namespace Ex3.ConsoleUI
 
         private void setMember(Type i_MemberType, string i_MemberName, Vehicle i_Vehicle)
         {
-            string input = "";
+            string input = string.Empty;
 
             r_ConsoleUI.PrintToScreen(string.Format("{0}: ", i_MemberName));
             if (i_MemberType.IsEnum)
             {
                 input = r_ConsoleUI.FindEnumType(i_MemberType);
             }
-            else if (i_MemberType == typeof(Boolean))
+            else if (i_MemberType == typeof(bool))
             {
                 input = r_ConsoleUI.HandleBooleanType(i_MemberName);
             }

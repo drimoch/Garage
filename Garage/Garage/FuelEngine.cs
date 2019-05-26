@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Ex3.GarageLogic
 {
-    class FuelEngine : Engine
+    public class FuelEngine : Engine
     {
         private readonly Enums.eGasType r_GasType;
+
         public FuelEngine(Enums.eGasType i_GasType, float i_CurrentEnergy, float i_MaxEnergy) : base(i_CurrentEnergy, i_MaxEnergy)
         {
             r_GasType = i_GasType;
@@ -16,7 +17,7 @@ namespace Ex3.GarageLogic
         {
             if (i_GasType == r_GasType)
             {
-                base.addEnergy(i_AmountToAdd);
+                addEnergy(i_AmountToAdd);
             }
             else
             {
